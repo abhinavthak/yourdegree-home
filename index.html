@@ -172,6 +172,7 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 .dmatch span{font:700 10px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
 .disha.matched .dmatch{opacity:1;transform:none}
 .cta .ico+*{margin:0}
+
 @media (prefers-reduced-motion:reduce){.ddot{animation:none}}
 .pref{font:400 14.5px/1.4 var(--sans);color:#696969;margin-top:-6px}
 .pref a{color:#1c1c1e;font-weight:500;text-underline-offset:3px}
@@ -334,10 +335,56 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
   .fcol ul{display:none}
   .flegal{flex-direction:column}
 }
-@media (max-width:520px){
-  .pgrid,.ugrid{grid-template-columns:1fr}
-  .ucard{max-width:360px;margin-inline:auto;width:100%;box-sizing:border-box}
-  .tcols{grid-template-columns:1fr}
+
+/* menu (all widths) */
+.hero{position:relative}
+.menu{cursor:pointer}
+.mnav{position:absolute;z-index:50;top:78px;right:max(16px,calc((100% - 1280px)/2 + var(--gutR)));width:min(340px,calc(100% - 32px));box-sizing:border-box;display:grid;gap:2px;padding:10px;border-radius:20px;background:var(--white);box-shadow:0 18px 44px rgba(10,31,62,.16)}
+.mnav[hidden]{display:none}
+.mnav a{display:flex;align-items:center;gap:12px;padding:13px 12px;border-radius:12px;font:500 16px/1.2 var(--sans);color:#16181d;text-decoration:none}
+.mnav a:hover{background:var(--band)}
+.mnav a .ico{width:20px;height:20px;color:var(--green)}
+.mnav .new{margin-left:auto}
+.mnav a.cta{margin-top:8px;justify-content:center;color:var(--white);height:50px;border-radius:999px}
+.mnav a.cta .ico{color:var(--white)}
+.mnav a.cta:hover{background:var(--green-cta)}
+.fbtn{all:unset;display:flex;justify-content:space-between;align-items:center;width:100%;box-sizing:border-box;cursor:default}
+.fbtn .ico{display:none}
+.fbtn:focus-visible{outline:2px solid var(--white);outline-offset:4px;border-radius:4px}
+@media (max-width:759px){
+  /* banner: crop to the headline so it stays readable */
+  .banner{aspect-ratio:16/10;object-fit:cover;object-position:86% 50%;border-radius:18px}
+  /* tools: 2-up compact tiles */
+  .tgrid{grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+  .tcard{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 16px}
+  .tcard .go{display:none}
+  .t3d{width:52px;height:52px}
+  .tcard p{font-size:15px}
+  .toggle button{height:46px;font-size:14.5px}
+  /* trust: icon-left list */
+  .tcols{grid-template-columns:1fr;gap:26px;margin-top:32px;text-align:left}
+  .tcols>div{grid-template-columns:56px 1fr;column-gap:16px;row-gap:4px;justify-items:start;align-items:start}
+  .tcols .ticon{grid-row:span 2;width:56px;height:56px}
+  .tcols>div>:not(.ticon){grid-column:2}
+  .tcols h3{margin-top:2px;font-size:18px}
+  .tcols p{font-size:14.5px;max-width:none}
+  .ctaRow{margin-top:36px}
+  /* swipe rows */
+  .pgrid,.ugrid{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:80%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(-1 * var(--gut)) calc(-1 * var(--gutR));padding-inline:var(--gut) var(--gutR);scroll-padding-inline:var(--gut);scrollbar-width:none;padding-bottom:4px}
+  .pgrid::-webkit-scrollbar,.ugrid::-webkit-scrollbar{display:none}
+  .pcard,.ucard{scroll-snap-align:start}
+  .ugrid{margin-top:32px}
+  .dcard a{font-size:14.5px}
+  .mquote{margin-top:28px}
+  /* footer accordions */
+  .foot{padding-block:40px 32px}
+  .fcol{border-bottom:1px solid rgba(255,255,255,.22)}
+  .fcol h4{padding:0;border:0}
+  .fbtn{padding:18px 0;cursor:pointer}
+  .fbtn .ico{display:block;transition:transform .2s}
+  .fcol.open .fbtn .ico{transform:rotate(180deg)}
+  .fcol.open ul{display:grid;margin:0;padding:0 0 18px}
+  .flegal{margin-top:28px;border-top:0;padding-top:0}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -371,6 +418,7 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
   <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
   <symbol id="i-tick" viewBox="0 0 24 24"><path d="M4 12.5 9 17.5 20 6.5"/></symbol>
 </svg>
 
@@ -386,9 +434,17 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
       </ul>
       <div class="me">
         <button class="avatar avph" aria-label="Your profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg></button>
-        <button class="menu" aria-label="Menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+        <button class="menu" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><svg class="ico"><use href="#i-menu"/></svg></button>
       </div>
     </div>
+    <nav class="mnav" id="mnav" aria-label="Main menu" hidden>
+      <a href="#"><svg class="ico"><use href="#i-compass"/></svg>Explore Programs</a>
+      <a href="#"><svg class="ico"><use href="#i-uni"/></svg>Top University</a>
+      <a href="#"><svg class="ico"><use href="#i-tool"/></svg>Tools</a>
+      <a href="#"><svg class="ico"><use href="#i-scale"/></svg>Compare Programs<span class="new">NEW</span></a>
+      <a href="#"><svg class="ico"><use href="#i-mic"/></svg>Talk to Disha</a>
+      <a class="cta" href="#">Book a Free Session <svg class="ico"><use href="#i-arrow"/></svg></a>
+    </nav>
     <div class="heroin">
       <h1 class="hd">Find the right <em>online degree</em><br>for your career goals</h1>
       <form class="search" onsubmit="event.preventDefault()">
@@ -579,16 +635,41 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 <footer class="foot">
   <div class="wrap">
     <div class="fcols">
-      <div class="fcol"><h4>Degrees<svg class="ico"><use href="#i-down"/></svg></h4><ul><li><a href="#">UG Degrees</a></li><li><a href="#">PG Degrees</a></li><li><a href="#">Compare</a></li></ul></div>
-      <div class="fcol"><h4>Universities<svg class="ico"><use href="#i-down"/></svg></h4><ul><li><a href="#">Explore universities</a></li><li><a href="#">Accreditation</a></li></ul></div>
-      <div class="fcol"><h4>Guidance<svg class="ico"><use href="#i-down"/></svg></h4><ul><li><a href="#">Fees and EMI</a></li><li><a href="#">Admissions</a></li><li><a href="#">Frequently asked questions</a></li></ul></div>
-      <div class="fcol"><h4>Your Degree<svg class="ico"><use href="#i-down"/></svg></h4><ul><li><a href="#">About us</a></li><li><a href="#">Contact us</a></li><li><a href="#">Support</a></li></ul></div>
+      <div class="fcol"><h4><button class="fbtn" aria-expanded="false">Degrees<svg class="ico"><use href="#i-down"/></svg></button></h4><ul><li><a href="#">UG Degrees</a></li><li><a href="#">PG Degrees</a></li><li><a href="#">Compare</a></li></ul></div>
+      <div class="fcol"><h4><button class="fbtn" aria-expanded="false">Universities<svg class="ico"><use href="#i-down"/></svg></button></h4><ul><li><a href="#">Explore universities</a></li><li><a href="#">Accreditation</a></li></ul></div>
+      <div class="fcol"><h4><button class="fbtn" aria-expanded="false">Guidance<svg class="ico"><use href="#i-down"/></svg></button></h4><ul><li><a href="#">Fees and EMI</a></li><li><a href="#">Admissions</a></li><li><a href="#">Frequently asked questions</a></li></ul></div>
+      <div class="fcol"><h4><button class="fbtn" aria-expanded="false">Your Degree<svg class="ico"><use href="#i-down"/></svg></button></h4><ul><li><a href="#">About us</a></li><li><a href="#">Contact us</a></li><li><a href="#">Support</a></li></ul></div>
     </div>
     <div class="flegal"><span>© 2026 Your Degree. All rights reserved.</span><nav><a href="#">Privacy policy</a><a href="#">Terms of use</a></nav></div>
   </div>
 </footer>
 
 <script>
+
+(function(){
+  var b=document.getElementById('menuBtn'),n=document.getElementById('mnav'); if(!b||!n) return;
+  function set(o){n.hidden=!o;b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu');b.querySelector('use').setAttribute('href',o?'#i-close':'#i-menu');}
+  b.addEventListener('click',function(e){e.stopPropagation();set(n.hidden);});
+  document.addEventListener('click',function(e){if(!n.hidden&&!n.contains(e.target))set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!n.hidden){set(false);b.focus();}});
+  n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+})();
+(function(){
+  var mq=window.matchMedia('(max-width:759px)');
+  document.querySelectorAll('.fbtn').forEach(function(btn){btn.addEventListener('click',function(){if(!mq.matches)return;var c=btn.closest('.fcol'),o=!c.classList.contains('open');c.classList.toggle('open',o);btn.setAttribute('aria-expanded',o);});});
+})();
+(function(){
+  var sec=document.querySelector('.unis'); if(!sec) return;
+  var tr=sec.querySelector('.ugrid'),pg=sec.querySelector('.pager'),pill=pg.querySelector('.pg-pill'),cards=tr.children;
+  function scrollable(){return tr.scrollWidth>tr.clientWidth+4;}
+  function idx(){var x=tr.scrollLeft,best=0,bd=1e9;for(var i=0;i<cards.length;i++){var d=Math.abs(cards[i].offsetLeft-tr.offsetLeft-tr.clientLeft-x-parseFloat(getComputedStyle(tr).paddingLeft)+0);if(d<bd){bd=d;best=i;}}return best;}
+  function go(i){i=Math.max(0,Math.min(cards.length-1,i));tr.scrollTo({left:cards[i].offsetLeft-cards[0].offsetLeft,behavior:'smooth'});}
+  function upd(){var i=scrollable()?idx():0;if(scrollable()&&tr.scrollLeft+tr.clientWidth>=tr.scrollWidth-4)i=cards.length-1;pill.textContent=(i+1)+'/'+cards.length;pg.querySelector('.prev').style.background=i===0?'#c4c4c4':'#2a2d32';pg.querySelector('.next').style.background=(!scrollable()||i>=cards.length-1)?'#c4c4c4':'#2a2d32';}
+  pg.querySelector('.prev').addEventListener('click',function(){if(scrollable())go(idx()-1);});
+  pg.querySelector('.next').addEventListener('click',function(){if(scrollable())go(idx()+1);});
+  tr.addEventListener('scroll',function(){clearTimeout(tr._t);tr._t=setTimeout(upd,80);});
+  window.addEventListener('resize',upd); upd();
+})();
 
 (function(){
   var sec=document.querySelector('.mentor'),cl=sec&&sec.querySelector('.cluster'); if(!cl) return;
