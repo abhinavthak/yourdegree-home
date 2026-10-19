@@ -271,8 +271,8 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 .tph{position:relative;margin:0;border-radius:var(--r);overflow:hidden}
 .tph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .tph figcaption{position:absolute;left:0;right:0;bottom:0;padding:70px 16px 22px;text-align:center;color:var(--white);background:linear-gradient(to top,rgba(143,26,42,.96) 0,rgba(190,35,48,.82) 42%,rgba(190,35,48,0) 100%)}
-.tph b{display:block;font:700 22px/1.2 var(--head);letter-spacing:-.02em}
-.tph span{display:block;margin-top:6px;font:500 14px/1.35 var(--sans);opacity:.95}
+.tph figcaption b{display:block;font:700 22px/1.2 var(--head);letter-spacing:-.02em}
+.tph figcaption span{display:block;margin-top:6px;font:500 14px/1.35 var(--sans);opacity:.95}
 .tsec .pager{margin-top:32px}
 .tnote{margin-top:14px;text-align:center;font:400 12px/1.4 var(--sans);color:#8a8f99}
 @media (max-width:759px){
@@ -296,6 +296,32 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 .faq summary:hover{color:var(--brand)}
 .faq p{margin:-8px 0 0;padding:0 48px 28px 0;font:400 16px/1.65 var(--sans);color:#4a5568;max-width:64ch}
 @media (max-width:899px){.faqgrid{grid-template-columns:1fr;gap:28px}.faqhead p{margin-top:14px}}
+/* video testimonials */
+.tph figcaption{pointer-events:none;z-index:2}
+.tplay{all:unset;position:absolute;inset:0;z-index:1;cursor:pointer;display:block}
+.tplay:focus-visible{outline:3px solid var(--white);outline-offset:-6px;border-radius:var(--r)}
+.tpbtn{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .2s,background .2s}
+.tpbtn svg{width:26px;height:26px;fill:var(--brand-cta);margin-left:4px}
+.tplay:hover .tpbtn{transform:translate(-50%,-50%) scale(1.08);background:var(--white)}
+.tchip{position:absolute;top:14px;right:14px;display:flex;align-items:center;gap:5px;padding:6px 10px 6px 8px;border-radius:999px;background:rgba(26,32,44,.62);color:var(--white);font:600 12px/1 var(--sans);backdrop-filter:blur(4px)}
+.tchip .ico{width:12px;height:12px;fill:currentColor;stroke:none}
+.vmodal{position:fixed;inset:0;z-index:100;backdrop-filter:blur(6px);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(12,14,20,.88)}
+.vmodal[hidden]{display:none}
+.vbox{position:relative;width:min(960px,100%)}
+.vstage{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000}
+.vstage video{width:100%;height:100%;display:block;background:#000}
+.vsoon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.vsoon[hidden],.vstage video[hidden]{display:none}
+#vposter{position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px) brightness(.5) saturate(1.2)}
+.vface{position:relative;width:120px;height:120px;border-radius:50%;object-fit:cover;object-position:50% 25%;border:3px solid rgba(255,255,255,.9)}
+.vsoon p{position:relative;display:flex;align-items:center;gap:10px;margin:0;padding:12px 18px;border-radius:999px;background:rgba(255,255,255,.14);color:var(--white);font:600 16px/1 var(--sans)}
+.vsoon .ico{width:16px;height:16px;fill:currentColor;stroke:none}
+.vclose{position:absolute;top:-52px;right:0;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.14);color:var(--white);display:grid;place-items:center;cursor:pointer}
+.vclose:hover{background:rgba(255,255,255,.24)}
+.vcap{margin:14px 0 0;color:var(--white);font:500 15px/1.4 var(--sans);text-align:center}
+.vcap b{font-weight:700}
+body.vlock{overflow:hidden}
+@media (max-width:759px){.tpbtn{width:56px;height:56px;top:58%}.vstage{aspect-ratio:9/12}}
 /* footer */
 .foot{background:var(--navy);color:var(--white);padding-block:72px 40px}
 .fcols{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
@@ -420,6 +446,7 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
   <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
   <symbol id="i-tick" viewBox="0 0 24 24"><path d="M4 12.5 9 17.5 20 6.5"/></symbol>
 </svg>
@@ -617,7 +644,7 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 <section class="sec tsec" style="padding-top:0">
   <div class="wrap">
     <h2 class="hd center">What students say</h2>
-    <div class="ttrack" id="ttrack" tabindex="0" aria-label="Student testimonials"><article class="tcard2"><div class="tq"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote>My counsellor compared three MBA programs against my budget and NAAC rating in one call. Saved me weeks of research.</blockquote><img class="tlogo" src="assets/img/502341bb01.webp" alt="Chandigarh University" loading="lazy" decoding="async"></div><figure class="tph"><img src="assets/img/713b11221e.webp" alt="Portrait of Rhea M." width="600" height="840" loading="lazy" decoding="async"><figcaption><b>Rhea M.</b><span>Online MBA, Business Analytics</span></figcaption></figure></article><article class="tcard2"><div class="tq"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote>I was working full time and needed something flexible. The MCA program I picked let me keep my job and finish on schedule.</blockquote><img class="tlogo" src="assets/img/708eddc90e.webp" alt="D Y Patil University" loading="lazy" decoding="async"></div><figure class="tph"><img src="assets/img/8275d36c7e.webp" alt="Portrait of Aman K." width="600" height="840" loading="lazy" decoding="async"><figcaption><b>Aman K.</b><span>Online MCA, Cloud Computing</span></figcaption></figure></article><article class="tcard2"><div class="tq"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote>Disha asked about my shifts and my budget before suggesting anything. The program she matched me with fits around my week.</blockquote><img class="tlogo" src="assets/img/0d254a487f.webp" alt="Kurukshetra University" loading="lazy" decoding="async"></div><figure class="tph"><img src="assets/img/ab1e4c7663.webp" alt="Portrait of Sneha R." width="600" height="840" loading="lazy" decoding="async"><figcaption><b>Sneha R.</b><span>Online MBA</span></figcaption></figure></article><article class="tcard2"><div class="tq"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote>I wanted a one-year option I could finish alongside work. Seeing fees and time commitment side by side made the choice easy.</blockquote><img class="tlogo" src="assets/img/f62dd3ebc9.webp" alt="O.P. Jindal Global University" loading="lazy" decoding="async"></div><figure class="tph"><img src="assets/img/74c58870b7.webp" alt="Portrait of Vikram S." width="600" height="840" loading="lazy" decoding="async"><figcaption><b>Vikram S.</b><span>Online MBA, Business Analytics</span></figcaption></figure></article></div>
+    <div class="ttrack" id="ttrack" tabindex="0" aria-label="Student testimonials"><article class="tcard2"><div class="tq"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote>My counsellor compared three MBA programs against my budget and NAAC rating in one call. Saved me weeks of research.</blockquote><img class="tlogo" src="assets/img/502341bb01.webp" alt="Chandigarh University" loading="lazy" decoding="async"></div><figure class="tph"><img src="assets/img/713b11221e.webp" alt="Portrait of Rhea M." width="600" height="840" loading="lazy" decoding="async"><button class="tplay" data-video="" data-name="Rhea M." data-prog="Online MBA, Business Analytics" aria-label="Play Rhea M.’s video testimonial"><span class="tchip"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Watch</span><span class="tpbtn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span></button><figcaption><b>Rhea M.</b><span>Online MBA, Business Analytics</span></figcaption></figure></article><article class="tcard2"><div class="tq"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote>I was working full time and needed something flexible. The MCA program I picked let me keep my job and finish on schedule.</blockquote><img class="tlogo" src="assets/img/708eddc90e.webp" alt="D Y Patil University" loading="lazy" decoding="async"></div><figure class="tph"><img src="assets/img/8275d36c7e.webp" alt="Portrait of Aman K." width="600" height="840" loading="lazy" decoding="async"><button class="tplay" data-video="" data-name="Aman K." data-prog="Online MCA, Cloud Computing" aria-label="Play Aman K.’s video testimonial"><span class="tchip"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Watch</span><span class="tpbtn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span></button><figcaption><b>Aman K.</b><span>Online MCA, Cloud Computing</span></figcaption></figure></article><article class="tcard2"><div class="tq"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote>Disha asked about my shifts and my budget before suggesting anything. The program she matched me with fits around my week.</blockquote><img class="tlogo" src="assets/img/0d254a487f.webp" alt="Kurukshetra University" loading="lazy" decoding="async"></div><figure class="tph"><img src="assets/img/ab1e4c7663.webp" alt="Portrait of Sneha R." width="600" height="840" loading="lazy" decoding="async"><button class="tplay" data-video="" data-name="Sneha R." data-prog="Online MBA" aria-label="Play Sneha R.’s video testimonial"><span class="tchip"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Watch</span><span class="tpbtn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span></button><figcaption><b>Sneha R.</b><span>Online MBA</span></figcaption></figure></article><article class="tcard2"><div class="tq"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote>I wanted a one-year option I could finish alongside work. Seeing fees and time commitment side by side made the choice easy.</blockquote><img class="tlogo" src="assets/img/f62dd3ebc9.webp" alt="O.P. Jindal Global University" loading="lazy" decoding="async"></div><figure class="tph"><img src="assets/img/74c58870b7.webp" alt="Portrait of Vikram S." width="600" height="840" loading="lazy" decoding="async"><button class="tplay" data-video="" data-name="Vikram S." data-prog="Online MBA, Business Analytics" aria-label="Play Vikram S.’s video testimonial"><span class="tchip"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Watch</span><span class="tpbtn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span></button><figcaption><b>Vikram S.</b><span>Online MBA, Business Analytics</span></figcaption></figure></article></div>
     <div class="pager" id="tpager">
       <button class="pg-btn prev" aria-label="Previous testimonial"><svg class="ico"><use href="#i-back"/></svg></button>
       <span class="pg-pill" id="tpill">1/4</span><span class="pg-dash"></span><span class="pg-dash"></span><span class="pg-dash"></span>
@@ -634,6 +661,16 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
     <div class="faqlist" id="faqlist"><details class="faq" open><summary>Are the programmes on YourDegree UGC-recognised?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>Yes. YourDegree lists only UGC-entitled online programmes from recognised universities, such as D Y Patil, Chandigarh, Kurukshetra and O.P. Jindal Global University. Each programme shows the university’s NAAC grade so you can check it before you apply.</p></details><details class="faq"><summary>How does YourDegree help students choose the right course?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>Speak to a certified counsellor, or talk it through with Disha, our AI voice counsellor. Both ask about your goals, your schedule and your budget, compare programmes side by side, and recommend a best fit with two more to consider.</p></details><details class="faq"><summary>Is YourDegree connected with recognised universities?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>YourDegree is an online platform that helps students discover, compare and apply to online degree programmes offered by recognised universities across India.</p></details><details class="faq"><summary>Does YourDegree charge students for counselling?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>No. Counselling calls are free. When you enrol, you pay the university directly, never YourDegree.</p></details><details class="faq"><summary>Are EMI options available for online degree programmes?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>Many universities let you pay semester by semester, and several, including Chandigarh University Online and D Y Patil University Online, offer no-cost EMI. Use the Fee & EMI Calculator to see what a programme costs per month.</p></details></div>
   </div>
 </section>
+<div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-labelledby="vcap" hidden>
+  <div class="vbox">
+    <button class="vclose" id="vclose" aria-label="Close video"><svg class="ico"><use href="#i-close"/></svg></button>
+    <div class="vstage">
+      <video id="vplayer" controls playsinline preload="none"></video>
+      <div class="vsoon" id="vsoon"><img id="vposter" alt=""><img class="vface" id="vface" alt=""><p><svg class="ico"><use href="#i-play"/></svg>Video coming soon</p></div>
+    </div>
+    <p class="vcap" id="vcap"></p>
+  </div>
+</div>
 <footer class="foot">
   <div class="wrap">
     <div class="fcols">
@@ -647,6 +684,24 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 </footer>
 
 <script>
+
+(function(){
+  var m=document.getElementById('vmodal'); if(!m) return;
+  var v=document.getElementById('vplayer'),soon=document.getElementById('vsoon'),poster=document.getElementById('vposter'),cap=document.getElementById('vcap'),x=document.getElementById('vclose'),from=null;
+  function open(btn){
+    from=btn; var src=btn.dataset.video, img=btn.parentNode.querySelector('img');
+    cap.innerHTML='<b>'+btn.dataset.name+'</b> · '+btn.dataset.prog;
+    poster.src=img.currentSrc||img.src;document.getElementById('vface').src=poster.src;
+    if(src){v.hidden=false;soon.hidden=true;v.poster=poster.src;v.src=src;v.play().catch(function(){});}
+    else{v.hidden=true;soon.hidden=false;}
+    m.hidden=false;document.body.classList.add('vlock');x.focus();
+  }
+  function close(){v.pause();v.removeAttribute('src');v.load();m.hidden=true;document.body.classList.remove('vlock');if(from)from.focus();}
+  document.querySelectorAll('.tplay').forEach(function(b){b.addEventListener('click',function(){open(b);});});
+  x.addEventListener('click',close);
+  m.addEventListener('click',function(e){if(e.target===m)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!m.hidden)close();});
+})();
 
 (function(){
   var b=document.getElementById('menuBtn'),n=document.getElementById('mnav'); if(!b||!n) return;
