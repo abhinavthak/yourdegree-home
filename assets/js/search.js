@@ -21,11 +21,11 @@
   var SITE = 'https://www.yourdegree.com/';
 
   var data = null, loading = null;
-  var state = { degree: null, spec: null, budget: 'any' };
+  var state = { degree: null, uni: null, spec: null, budget: 'any' };
   var active = null, from = null, shown = 12, sort = 'fee';
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
-  var panel = $('#spanel'), qDeg = $('#qDeg'), qSpec = $('#qSpec'), bBudget = $('#bBudget');
+  var panel = $('#spanel'), qDeg = $('#qDeg'), qUni = $('#qUni'), qSpec = $('#qSpec'), fBudget = $('#sresBudget');
   var res = $('#sres'), mq = window.matchMedia('(max-width:759px)');
 
   function load() {
@@ -45,6 +45,7 @@
   function match(p, o) {
     o = o || state;
     if (o.degree && p.d !== o.degree) return false;
+    if (o.uni && p.u !== o.uni) return false;
     if (o.spec && p.s !== o.spec) return false;
     var b = budgetOf(o.budget);
     if (b.id !== 'any' && (p.f == null || p.f < b.min || p.f >= b.max)) return false;
@@ -57,25 +58,21 @@
     active = seg;
     form.classList.toggle('on', !!seg);
     form.querySelectorAll('.seg').forEach(function (s) { s.classList.toggle('act', s.dataset.seg === seg); });
-    [qDeg, qSpec].forEach(function (i) { i.setAttribute('aria-expanded', String(i.closest('.seg').dataset.seg === seg)); });
-    bBudget.setAttribute('aria-expanded', String(seg === 'budget'));
+    [qDeg, qUni, qSpec].forEach(function (i) { i.setAttribute('aria-expanded', String(i.closest('.seg').dataset.seg === seg)); });
     if (!seg) { panel.hidden = true; document.body.classList.remove('slock'); syncFields(); return; }
     load().then(function () { render(); panel.hidden = false; if (mq.matches) document.body.classList.add('slock'); });
   }
   function syncFields() {
     if (active !== 'degree') qDeg.value = state.degree ? DEG[state.degree][0] : '';
+    if (active !== 'uni') qUni.value = state.uni || '';
     if (active !== 'spec') qSpec.value = state.spec || '';
-    bBudget.querySelector('.val').textContent = state.budget === 'any' ? 'Choose your budget' : budgetOf(state.budget).label;
-    bBudget.classList.toggle('has', state.budget !== 'any');
-    form.querySelectorAll('.segclr').forEach(function (c) {
-      var k = c.dataset.clear, has = k === 'budget' ? state.budget !== 'any' : !!state[k];
-      c.hidden = !has;
-    });
+    fBudget.value = state.budget;
+    form.querySelectorAll('.segclr').forEach(function (c) { c.hidden = !state[c.dataset.clear]; });
   }
   function next(after) {
     active = null; syncFields();
-    if (after === 'degree') { setActive('spec'); qSpec.focus(); }
-    else if (after === 'spec') { setActive('budget'); bBudget.focus(); }
+    if (after === 'degree') { setActive('uni'); qUni.focus(); }
+    else if (after === 'uni') { setActive('spec'); qSpec.focus(); }
     else { setActive(null); form.querySelector('.sbtn').focus(); }
   }
 
@@ -87,8 +84,8 @@
   function render() {
     panel.dataset.seg = active;
     if (active === 'degree') renderDegree();
-    else if (active === 'spec') renderSpec();
-    else renderBudget();
+    else if (active === 'uni') renderUni();
+    else renderSpec();
   }
   function renderDegree() {
     var q = norm(qDeg.value), html = sheetHead('Choose a degree');
@@ -97,7 +94,7 @@
         html += '<p class="sp-k">' + (lvl === 'pg' ? 'Postgraduate' : 'Undergraduate') + '</p><div class="sp-tiles">';
         Object.keys(DEG).forEach(function (k) {
           if (DEG[k][2] !== lvl) return;
-          var n = count({ degree: k, spec: null, budget: 'any' });
+          var n = count({ degree: k, uni: state.uni, spec: null, budget: 'any' });
           if (!n) return;
           html += '<button type="button" class="sp-tile' + (state.degree === k ? ' sel' : '') + '" data-deg="' + k + '"><b>' + DEG[k][0] +
             '</b><span>' + DEG[k][1] + '</span><i>' + n + ' programmes</i></button>';
@@ -129,12 +126,12 @@
   }
   function renderSpec() {
     var q = norm(qSpec.value === state.spec ? '' : qSpec.value), counts = {};
-    data.forEach(function (p) { if ((!state.degree || p.d === state.degree)) counts[p.s] = (counts[p.s] || 0) + 1; });
+    data.forEach(function (p) { if ((!state.degree || p.d === state.degree) && (!state.uni || p.u === state.uni)) counts[p.s] = (counts[p.s] || 0) + 1; });
     var names = Object.keys(counts).filter(function (s) { return !q || norm(s).indexOf(q) > -1; })
       .sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b); });
-    var html = sheetHead('Choose a specialisation') + '<p class="sp-k">' + (state.degree ? 'Specialisations in ' + DEG[state.degree][0] : 'Popular specialisations') + '</p><ul class="sp-list sp-scroll" role="listbox">';
+    var html = sheetHead('Choose a specialisation') + '<p class="sp-k">' + (state.degree ? 'Specialisations in ' + DEG[state.degree][0] + (state.uni ? ' at ' + esc(state.uni) : '') : 'Popular specialisations') + '</p><ul class="sp-list sp-scroll" role="listbox">';
     if (!q) html += '<li><button type="button" role="option" data-spec=""' + (!state.spec ? ' class="sel"' : '') + '><span><b>Any specialisation</b><small>' +
-      count({ degree: state.degree, spec: null, budget: 'any' }) + ' programmes</small></span></button></li>';
+      count({ degree: state.degree, uni: state.uni, spec: null, budget: 'any' }) + ' programmes</small></span></button></li>';
     names.slice(0, q ? 40 : 60).forEach(function (s) {
       html += '<li><button type="button" role="option" data-spec="' + esc(s) + '"' + (state.spec === s ? ' class="sel"' : '') + '><span><b>' + esc(s) +
         '</b><small>' + counts[s] + ' programme' + (counts[s] > 1 ? 's' : '') + '</small></span></button></li>';
@@ -142,27 +139,24 @@
     if (!names.length) html += '<li class="sp-none">No specialisations match “' + esc(qSpec.value) + '”.</li>';
     panel.innerHTML = html + '</ul>';
   }
-  function renderBudget() {
-    var base = { degree: state.degree, spec: state.spec, budget: 'any' };
-    var fees = data.filter(function (p) { return match(p, base) && p.f != null; }).map(function (p) { return p.f; });
-    var top = Math.max(400000, Math.ceil((fees.length ? Math.max.apply(null, fees) : 0) / 100000) * 100000);
-    top = Math.min(top, 600000);
-    var bins = 24, w = top / bins, h = new Array(bins).fill(0);
-    fees.forEach(function (f) { h[Math.min(bins - 1, Math.floor(f / w))]++; });
-    var mx = Math.max.apply(null, h.concat(1)), b = budgetOf(state.budget);
-    var html = sheetHead('Choose your budget') + '<p class="sp-k">Total programme fee' + (fees.length ? ' · ' + fees.length + ' programmes with fees listed' : '') + '</p>';
-    html += '<div class="sp-hist" aria-hidden="true">';
-    h.forEach(function (v, i) {
-      var lo = i * w, inR = b.id === 'any' || (lo >= b.min && lo < b.max);
-      html += '<i class="' + (inR ? 'in' : '') + '" style="height:' + (v ? Math.max(6, Math.round(v / mx * 100)) : 2) + '%"></i>';
+  function renderUni() {
+    var q = norm(qUni.value === state.uni ? '' : qUni.value), unis = {};
+    data.forEach(function (p) {
+      if (state.degree && p.d !== state.degree) return;
+      var u = unis[p.u] || (unis[p.u] = { n: 0, naac: p.n });
+      u.n++; if (!u.naac && p.n) u.naac = p.n;
     });
-    html += '</div><div class="sp-axis"><span>₹0</span><span>' + lakh(top / 2) + '</span><span>' + lakh(top) + '+</span></div><div class="sp-chips">';
-    BUDGETS.forEach(function (o) {
-      var n = count({ degree: state.degree, spec: state.spec, budget: o.id });
-      html += '<button type="button" data-budget="' + o.id + '"' + (state.budget === o.id ? ' class="sel"' : '') + (n || o.id === 'any' ? '' : ' disabled') + '>' +
-        o.label + '<small>' + n + '</small></button>';
+    var names = Object.keys(unis).filter(function (u) { return !q || q.split(' ').every(function (w) { return norm(u).indexOf(w) > -1; }); })
+      .sort(function (a, b) { return unis[b].n - unis[a].n || a.localeCompare(b); });
+    var html = sheetHead('Choose a university') + '<p class="sp-k">' + (q ? 'Matching universities' : (state.degree ? 'Universities offering online ' + DEG[state.degree][0] : 'Popular universities')) + '</p><ul class="sp-list sp-scroll" role="listbox">';
+    if (!q) html += '<li><button type="button" role="option" data-uni=""' + (!state.uni ? ' class="sel"' : '') + '><span class="sp-ic"><svg class="ico"><use href="#i-uni"/></svg></span><span><b>Any university</b><small>' +
+      names.length + ' universities</small></span></button></li>';
+    names.slice(0, q ? 40 : 60).forEach(function (u) {
+      html += '<li><button type="button" role="option" data-uni="' + esc(u) + '"' + (state.uni === u ? ' class="sel"' : '') + '><span class="sp-ic sp-ini">' + esc(initials(u)) + '</span><span><b>' + esc(u) +
+        '</b><small>' + (unis[u].naac ? 'NAAC ' + unis[u].naac + ' · ' : '') + unis[u].n + ' programme' + (unis[u].n > 1 ? 's' : '') + '</small></span></button></li>';
     });
-    panel.innerHTML = html + '</div>';
+    if (!names.length) html += '<li class="sp-none">No universities match “' + esc(qUni.value) + '”' + (state.degree ? ' for ' + DEG[state.degree][0] : '') + '.</li>';
+    panel.innerHTML = html + '</ul>';
   }
 
   panel.addEventListener('mousedown', function (e) { if (e.target.closest('button')) e.preventDefault(); });
@@ -173,24 +167,28 @@
       var changed = state.degree !== btn.dataset.deg;
       state.degree = btn.dataset.deg;
       if (btn.dataset.spec !== undefined) { state.spec = btn.dataset.spec; next('spec'); return; }
-      if (changed) state.spec = null;
+      if (changed) { state.spec = null; if (state.uni && !count({ degree: state.degree, uni: state.uni, spec: null, budget: 'any' })) state.uni = null; }
       qDeg.blur(); next('degree'); return;
     }
-    if (btn.dataset.spec !== undefined) { state.spec = btn.dataset.spec || null; qSpec.blur(); next('spec'); return; }
-    if (btn.dataset.budget) { state.budget = btn.dataset.budget; render(); syncFields(); setTimeout(function () { next('budget'); }, 180); }
+    if (btn.dataset.uni !== undefined) {
+      state.uni = btn.dataset.uni || null;
+      if (state.spec && !count({ degree: state.degree, uni: state.uni, spec: state.spec, budget: 'any' })) state.spec = null;
+      qUni.blur(); next('uni'); return;
+    }
+    if (btn.dataset.spec !== undefined) { state.spec = btn.dataset.spec || null; qSpec.blur(); next('spec'); }
   });
 
-  [qDeg, qSpec].forEach(function (inp) {
+  [qDeg, qUni, qSpec].forEach(function (inp) {
     var seg = inp.closest('.seg').dataset.seg;
     inp.addEventListener('focus', function () { if (active !== seg) { from = inp; setActive(seg); } inp.select(); });
     inp.addEventListener('input', function () { if (data) render(); });
     inp.addEventListener('keydown', function (e) {
-      var opts = [].slice.call(panel.querySelectorAll('[data-deg],[data-spec]'));
+      if (e.key === 'Enter' && !data) { e.preventDefault(); load().then(function () { render(); inp.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' })); }); return; }
+      var opts = [].slice.call(panel.querySelectorAll('[data-deg],[data-uni],[data-spec]'));
       if (e.key === 'ArrowDown' && opts.length) { e.preventDefault(); opts[0].focus(); }
       if (e.key === 'Enter') { e.preventDefault(); if (opts.length && inp.value.trim()) opts[0].click(); else next(seg); }
     });
   });
-  bBudget.addEventListener('click', function () { setActive(active === 'budget' ? null : 'budget'); });
   form.querySelectorAll('.seg').forEach(function (s) {
     s.addEventListener('mousedown', function (e) {
       if (e.target.closest('.segclr')) return;
@@ -201,7 +199,7 @@
     c.addEventListener('click', function (e) {
       e.stopPropagation();
       var k = c.dataset.clear;
-      if (k === 'budget') state.budget = 'any'; else state[k] = null;
+      state[k] = null;
       if (k === 'degree') state.spec = null;
       syncFields(); if (active && data) render();
     });
@@ -212,14 +210,14 @@
     if (e.key === 'ArrowUp' && i > -1) { e.preventDefault(); if (i === 0 && from) from.focus(); else opts[i - 1].focus(); }
   });
   document.addEventListener('mousedown', function (e) { if (active && !form.contains(e.target)) setActive(null); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && active) { var a = active; setActive(null); (a === 'budget' ? bBudget : a === 'spec' ? qSpec : qDeg).focus(); } });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && active) { var a = active; setActive(null); ({ degree: qDeg, uni: qUni, spec: qSpec })[a].focus(); } });
 
   /* ---------- results ---------- */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var tyDeg = norm(qDeg.value);
     if (!state.degree && tyDeg) Object.keys(DEG).forEach(function (k) { if (norm(DEG[k][0]) === tyDeg || k === tyDeg) state.degree = k; });
-    setActive(null); qDeg.blur(); qSpec.blur();
+    setActive(null); qDeg.blur(); qUni.blur(); qSpec.blur();
     load().then(function () { shown = 12; showResults(true); });
   });
   function initials(u) { return u.replace(/\(.*?\)/g, '').split(/\s+/).filter(function (w) { return /^[A-Z]/.test(w) && !/^(Of|And|The)$/.test(w); }).slice(0, 2).map(function (w) { return w[0]; }).join(''); }
@@ -232,6 +230,7 @@
       return (a.f || 9e9) - (b.f || 9e9);
     });
     var bits = [state.degree ? 'Online ' + DEG[state.degree][0] : 'Online degrees'];
+    if (state.uni) bits.push(state.uni);
     if (state.spec) bits.push(state.spec);
     if (state.budget !== 'any') bits.push(budgetOf(state.budget).label);
     $('#sresTitle').textContent = list.length + ' programme' + (list.length === 1 ? '' : 's');
@@ -255,8 +254,16 @@
   }
   $('#sresMore').addEventListener('click', function () { shown += 12; showResults(false); });
   $('#sresSort').addEventListener('change', function (e) { sort = e.target.value; shown = 12; showResults(false); });
-  $('#sresClear').addEventListener('click', function () { state = { degree: null, spec: null, budget: 'any' }; syncFields(); showResults(false); });
+  fBudget.innerHTML = BUDGETS.map(function (b) { return '<option value="' + b.id + '">' + b.label + '</option>'; }).join('');
+  fBudget.addEventListener('change', function (e) { state.budget = e.target.value; shown = 12; showResults(false); });
+  $('#sresClear').addEventListener('click', function () { state = { degree: null, uni: null, spec: null, budget: 'any' }; syncFields(); showResults(false); });
   $('#sresClose').addEventListener('click', function () { res.hidden = true; form.scrollIntoView({ block: 'center' }); });
+
+  /* used by the degree cards: run a search for one degree */
+  window.ydSearch = function (deg) {
+    state = { degree: deg, uni: null, spec: null, budget: 'any' }; syncFields();
+    load().then(function () { shown = 12; showResults(true); });
+  };
 
   syncFields();
   ['pointerenter', 'focusin'].forEach(function (ev) { form.addEventListener(ev, load, { once: true }); });
