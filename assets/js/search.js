@@ -148,16 +148,20 @@
   function renderSpec() {
     var q = norm(qSpec.value === state.spec ? '' : qSpec.value), counts = {};
     data.forEach(function (p) { if ((!state.degree || p.d === state.degree) && (!state.uni || p.u === state.uni)) counts[p.s] = (counts[p.s] || 0) + 1; });
-    var names = Object.keys(counts).filter(function (s) { return !q || norm(s).indexOf(q) > -1; })
-      .sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b); });
-    var html = sheetHead('Choose a specialisation') + '<p class="sp-k">' + (state.degree ? 'Specialisations in ' + DEG[state.degree][0] + (state.uni ? ' at ' + esc(state.uni) : '') : 'Popular specialisations') + '</p><div class="sp-tiles sp-tx" role="listbox">';
-    if (!q) html += '<button type="button" role="option" class="sp-tile' + (!state.spec ? ' sel' : '') + '" data-spec=""><span>Any specialisation</span><small>' +
-      count({ degree: state.degree, uni: state.uni, spec: null, budget: 'any' }) + ' programmes</small></button>';
-    names.slice(0, q ? 40 : 80).forEach(function (s) {
-      html += '<button type="button" role="option" class="sp-tile' + (state.spec === s ? ' sel' : '') + '" data-spec="' + esc(s) + '"><span>' + esc(s) +
-        '</span><small>' + counts[s] + ' programme' + (counts[s] > 1 ? 's' : '') + '</small></button>';
+    var names = Object.keys(counts).filter(function (s) { return !q || q.split(' ').every(function (w) { return norm(s).indexOf(w) > -1; }); })
+      .sort(function (a, b) { return a.localeCompare(b); });
+    var total = count({ degree: state.degree, uni: state.uni, spec: null, budget: 'any' });
+    var html = sheetHead('Choose a specialisation') + '<div class="sp-pills sp-any"><button type="button" role="option" class="sp-pill sp-big' + (!state.spec ? ' sel' : '') + '" data-spec="">' +
+      '<svg class="ico sp-award" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 19 6v5.5c0 4-3 7.2-7 8.5-4-1.3-7-4.5-7-8.5V6z"/><path d="m8.8 11.3 2.2 2.2 4.2-4.3"/><path d="m8 18.5-1.5 3.5 3-1 1.5 1.8M16 18.5l1.5 3.5-3-1-1.5 1.8"/></svg>' +
+      '<span><b>Select Any Specialisation</b><small>' + total + ' Programme' + (total === 1 ? '' : 's') + '</small></span></button></div>';
+    var letter = null;
+    names.forEach(function (sp) {
+      var L = sp.charAt(0).toUpperCase();
+      if (L !== letter) { if (letter) html += '</div>'; letter = L; html += '<p class="sp-k sp-az">' + L + '</p><div class="sp-pills" role="listbox">'; }
+      html += '<button type="button" role="option" class="sp-pill sp-txt' + (state.spec === sp ? ' sel' : '') + '" data-spec="' + esc(sp) + '" title="' + esc(sp) + '">' +
+        '<span>' + esc(sp) + '</span><small>' + counts[sp] + '</small></button>';
     });
-    html += '</div>';
+    if (letter) html += '</div>';
     if (!names.length) html += '<p class="sp-none">No specialisations match “' + esc(qSpec.value) + '”.</p>';
     panel.innerHTML = html;
   }
@@ -171,8 +175,9 @@
     var names = Object.keys(unis).filter(function (u) { return !q || q.split(' ').every(function (w) { return norm(u).indexOf(w) > -1; }); })
       .sort(function (a, b) { return a.replace(/^(the|university of)\s+/i, '').localeCompare(b.replace(/^(the|university of)\s+/i, '')); });
     var html = sheetHead('Choose a university') + '<div class="sp-pills sp-any">' +
-      '<button type="button" role="option" class="sp-pill' + (!state.uni ? ' sel' : '') + '" data-uni="">' +
-      '<span class="sp-logo"><svg class="ico"><use href="#i-uni"/></svg></span><span>Select Any University</span></button></div>';
+      '<button type="button" role="option" class="sp-pill sp-big' + (!state.uni ? ' sel' : '') + '" data-uni="">' +
+      '<svg class="ico sp-award" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V10h14v11M9 21v-4h6v4M8 13h1M11.5 13h1M15 13h1M12 10V4m0 0h4l-1 1.5 1 1.5h-4"/></svg>' +
+      '<span><b>Select Any University</b><small>' + names.length + ' Universit' + (names.length === 1 ? 'y' : 'ies') + '</small></span></button></div>';
     var letter = null;
     names.forEach(function (u) {
       var L = u.replace(/^(the|university of)\s+/i, '').charAt(0).toUpperCase();
