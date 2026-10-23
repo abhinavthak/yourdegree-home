@@ -872,7 +872,7 @@ html.navlock .mega{overscroll-behavior:contain}
 #mnav .mfeat span{display:grid;gap:4px}
 #mnav .mfeat b{font:500 14px/1.3 var(--sans);color:#222}
 #mnav .mfeat small{font:400 12px/1.35 var(--sans);color:#6a6a6a}
-#mnav .mfeat svg{flex:none;width:56px;height:56px}
+#mnav .mfeat .mdisha{flex:none;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(255,120,104,.18) 0,rgba(255,120,104,0) 70%)}
 #mnav a:last-child{font-weight:500}
 @media (max-width:759px){.me .mepill{height:42px;gap:10px;padding:0 5px 0 12px}.mepill .avph,.mepill .avph svg{width:30px;height:30px}#mnav{top:68px;right:var(--gutR)}}
 /* phone/tablet Top University: accordion (Home Page — Mobile-3/5) */
@@ -947,7 +947,7 @@ html.navlock .mega{overscroll-behavior:contain}
     <nav class="mnav" id="mnav" aria-label="Account menu" hidden>
       <a href="#"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.5-2.7 4"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/></svg>Help Centre</a>
       <hr>
-      <a class="mfeat" href="#"><span><b>Talk to Disha</b><small>Your AI voice counsellor. Honest suggestions in a few minutes.</small></span><svg viewBox="0 0 64 64" aria-hidden="true"><defs><radialGradient id="dorbg" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#ffd1cc"/><stop offset=".55" stop-color="#f0473b"/><stop offset="1" stop-color="#b3123f"/></radialGradient></defs><circle cx="32" cy="32" r="22" fill="url(#dorbg)"/><g fill="#fff" opacity=".55"><circle cx="24" cy="22" r="1.4"/><circle cx="31" cy="19" r="1.2"/><circle cx="38" cy="21" r="1.4"/><circle cx="20" cy="30" r="1.2"/><circle cx="27" cy="28" r="1.5"/><circle cx="35" cy="27" r="1.3"/><circle cx="43" cy="29" r="1.2"/><circle cx="23" cy="38" r="1.3"/><circle cx="31" cy="36" r="1.5"/><circle cx="39" cy="36" r="1.3"/><circle cx="28" cy="44" r="1.2"/><circle cx="36" cy="44" r="1.2"/></g><path d="M8 32h3M53 32h3M13 24v16M51 24v16" stroke="#f0473b" stroke-width="2.4" stroke-linecap="round" opacity=".55"/></svg></a>
+      <a class="mfeat" href="#"><span><b>Talk to Disha</b><small>Your AI voice counsellor. Honest suggestions in a few minutes.</small></span><canvas class="mdisha" width="128" height="128" aria-hidden="true"></canvas></a>
       <hr>
       <a href="#">Book a free counselling session</a>
       <a href="#">Compare programs<span class="new">NEW</span></a>
@@ -1234,8 +1234,10 @@ html.navlock .mega{overscroll-behavior:contain}
 
 (function(){
   var b=document.getElementById('menuBtn'),n=document.getElementById('mnav'); if(!b||!n) return;
-  function set(o){var de=document.documentElement,gap=window.innerWidth-de.clientWidth;if(o!==de.classList.contains('navlock')){de.classList.toggle('navlock',o);document.body.style.paddingRight=o&&gap>0?gap+'px':'';}n.hidden=!o;b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu');}
-  b.addEventListener('click',function(e){e.stopPropagation();set(n.hidden);});
+  function set(o){if(!o&&window.dishaOrb)dishaOrb.release();var de=document.documentElement,gap=window.innerWidth-de.clientWidth;if(o!==de.classList.contains('navlock')){de.classList.toggle('navlock',o);document.body.style.paddingRight=o&&gap>0?gap+'px':'';}n.hidden=!o;b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu');}
+  var mini=n.querySelector('.mdisha'),orb=document.getElementById('dorb'),raf=null;
+  function paint(){if(!mini||!orb||!orb.width)return;var c=mini.getContext('2d'),W=orb.width,s=W*.66,x=(W-s)/2,y=(orb.height-s)/2-W*.02;c.clearRect(0,0,mini.width,mini.height);c.imageSmoothingQuality='high';c.filter='saturate(1.6) contrast(1.25)';for(var k=0;k<3;k++)c.drawImage(orb,x,y,s,s,0,0,mini.width,mini.height);c.filter='none';if(!n.hidden)raf=requestAnimationFrame(paint);}
+  b.addEventListener('click',function(e){e.stopPropagation();set(n.hidden);cancelAnimationFrame(raf);if(!n.hidden){if(window.dishaOrb)dishaOrb.play();paint();}else if(window.dishaOrb)dishaOrb.release();});
   document.addEventListener('click',function(e){if(!n.hidden&&!n.contains(e.target))set(false);});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!n.hidden){set(false);b.focus();}});
   n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
@@ -1339,7 +1341,9 @@ html.navlock .mega{overscroll-behavior:contain}
   function play(){if(!raf)raf=requestAnimationFrame(loop);if(!timer)timer=setInterval(function(){li=(li+1)%lines.length;if(li===0)box.classList.remove('matched');show();},3800);}
   function pause(){if(raf)cancelAnimationFrame(raf);raf=null;clearInterval(timer);timer=null;}
   draw(0);
-  if(window.IntersectionObserver) new IntersectionObserver(function(e){e[0].isIntersecting?play():pause();}).observe(box); else play();
+  var inView=false;
+  window.dishaOrb={play:play,release:function(){if(!inView)pause();}};
+  if(window.IntersectionObserver) new IntersectionObserver(function(e){inView=e[0].isIntersecting;inView?play():pause();}).observe(box); else play();
 })();
 (function(){
   var hero=document.querySelector('.hero'),btns=[].slice.call(document.querySelectorAll('.links .nlink[aria-controls]'));
