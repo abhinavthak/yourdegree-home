@@ -111,10 +111,12 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 .pbtn .s1{margin-inline:0}
 .pbtn:focus-visible .p{outline:2px solid var(--brand);outline-offset:2px}
 .pbtn:hover .p{filter:none;transform:translateY(-2px)}
-.cluster .p{transition:opacity .25s,transform .25s,filter .25s}
-.cluster.swap .p{opacity:.35;transform:scale(.96)}
-.mstats b,#cName,#cHead,.mquote{transition:opacity .25s}
-.mentor.swap #cName,.mentor.swap .mstats b,.mentor.swap #cHead,.mentor.swap .mquote{opacity:0}
+.cluster .p{transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1),filter .5s ease}
+.cluster.swap .p{opacity:.15;transform:scale(.94);filter:blur(2px) saturate(.8)}
+.cluster.swap .main{opacity:0;transform:scale(.9)}
+.mstats b,#cName,#cHead,.mquote{transition:opacity .45s ease,transform .5s cubic-bezier(.4,0,.2,1)}
+.mentor.swap #cName,.mentor.swap .mstats b,.mentor.swap #cHead,.mentor.swap .mquote{opacity:0;transform:translateY(6px)}
+#cHead{display:inline-block}
 #cName{min-width:9.5ch;text-align:center}
 .mname button{cursor:pointer}
 .mstats{display:flex;align-items:center;gap:32px;text-align:center}
@@ -1135,9 +1137,20 @@ body{padding-bottom:44px}
     var p=people[cur];$('cName').textContent=p.n;$('cHead').textContent=p.n+'.';$('cYears').textContent=p.y;$('cLearners').textContent=p.l;$('cQuote').textContent=p.q;
   }
   function go(d){if(busy)return;busy=true;sec.classList.add('swap');cl.classList.add('swap');
-    setTimeout(function(){cur=(cur+d+N)%N;render();sec.classList.remove('swap');cl.classList.remove('swap');setTimeout(function(){busy=false;},250);},220);}
-  $('cPrev').addEventListener('click',function(){go(-1);});
-  $('cNext').addEventListener('click',function(){go(1);});
+    setTimeout(function(){cur=(cur+d+N)%N;render();
+      requestAnimationFrame(function(){sec.classList.remove('swap');cl.classList.remove('swap');});
+      setTimeout(function(){busy=false;},600);},480);}
+  /* rotate every 8s while in view; pause on hover/focus, hidden tab or reduced motion */
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,timer=null,inView=false,held=false;
+  function sched(){clearInterval(timer);timer=null;if(!reduce&&inView&&!held&&!document.hidden)timer=setInterval(function(){go(1);},8000);}
+  if(window.IntersectionObserver)new IntersectionObserver(function(e){inView=e[0].isIntersecting;sched();},{threshold:.35}).observe(sec);else{inView=true;sched();}
+  [sec.querySelector('.grid')].forEach(function(g){
+    g.addEventListener('mouseenter',function(){held=true;sched();});g.addEventListener('mouseleave',function(){held=false;sched();});
+    g.addEventListener('focusin',function(){held=true;sched();});g.addEventListener('focusout',function(){held=false;sched();});
+  });
+  document.addEventListener('visibilitychange',sched);
+  $('cPrev').addEventListener('click',function(){go(-1);sched();});
+  $('cNext').addEventListener('click',function(){go(1);sched();});
   cl.querySelectorAll('.pbtn').forEach(function(b){b.addEventListener('click',function(){go(+b.dataset.off);});});
 })();
 
