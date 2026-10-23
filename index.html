@@ -553,7 +553,7 @@ body.vlock{overflow:hidden}
 .cta.outline:hover{background:var(--band)}
 .reads .ctaRow{margin-top:32px}
 body{padding-bottom:34px}
-.strip{position:fixed;left:0;right:0;bottom:0;z-index:90;background:#b3200f;color:var(--white);padding:0 16px max(0px,env(safe-area-inset-bottom,0px))}
+.strip{position:fixed;left:0;right:0;bottom:0;z-index:90;transform:translateY(100%);visibility:hidden;transition:transform .32s cubic-bezier(.4,0,.2,1),visibility 0s linear .32s;background:#b3200f;color:var(--white);padding:0 16px max(0px,env(safe-area-inset-bottom,0px))}
 .strip p{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;min-height:34px;font:400 14px/1.2 var(--sans)}
 .strip a{display:inline-flex;align-items:center;gap:6px;color:var(--white);font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 .strip .ico{width:13px;height:13px;stroke-width:2.2}
@@ -587,6 +587,7 @@ body{padding-bottom:34px}
 @media (max-width:1100px){.mm-panel.mm-prog,.mm-panel.mm-uni,.mm-panel.mm-tools{grid-template-columns:1fr;padding:22px 20px 28px}.mega .mm-panel{max-height:78vh}.mm-promo,.mu-progs{display:none}.mu-list li.on .mu-more{display:none!important}.mu-list li.on .mu-row{background:none}.mm-2col{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}}
 html.navlock,html.navlock body{overflow:hidden}
 html.navlock .mega{overscroll-behavior:contain}
+.strip.on{transform:none;visibility:visible;transition:transform .32s cubic-bezier(.4,0,.2,1)}
 /* footer */
 .foot{background:var(--navy);color:var(--white);padding-block:48px 32px}
 .fcols{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
@@ -1304,7 +1305,7 @@ html.navlock .mega{overscroll-behavior:contain}
 (function(){
   var hero=document.querySelector('.hero'),btns=[].slice.call(document.querySelectorAll('.links .nlink[aria-controls]'));
   function close(except){btns.forEach(function(b){if(b===except)return;b.setAttribute('aria-expanded','false');document.getElementById(b.getAttribute('aria-controls')).hidden=true;});hero.classList.toggle('mm-on',!!except&&except.getAttribute('aria-controls')==='mmPrograms');lock(!!except);document.body.classList.toggle('navsheet',!!except&&matchMedia('(max-width:1100px)').matches);}
-  function place(b){if(!matchMedia('(max-width:1100px)').matches)return;var de=document.documentElement,st=document.querySelector('.strip');de.style.setProperty('--navtop',Math.max(16,Math.round(b.getBoundingClientRect().bottom+12))+'px');de.style.setProperty('--stripH',(st&&getComputedStyle(st).display!=='none'?st.offsetHeight:0)+'px');}
+  function place(b){if(!matchMedia('(max-width:1100px)').matches)return;var de=document.documentElement,st=document.querySelector('.strip');de.style.setProperty('--navtop',Math.max(16,Math.round(b.getBoundingClientRect().bottom+12))+'px');de.style.setProperty('--stripH',(st&&st.classList.contains('on')&&getComputedStyle(st).display!=='none'?st.offsetHeight:0)+'px');}
   function lock(on){var de=document.documentElement;if(on===de.classList.contains('navlock'))return;var gap=window.innerWidth-de.clientWidth;de.classList.toggle('navlock',on);document.body.style.paddingRight=on&&gap>0?gap+'px':'';}
   btns.forEach(function(b){
     var m=document.getElementById(b.getAttribute('aria-controls'));
@@ -1344,6 +1345,16 @@ html.navlock .mega{overscroll-behavior:contain}
     function upd(){var x=tr.scrollLeft,best=0,bd=1e9;for(var i=0;i<n;i++){var d=Math.abs(items[i].offsetLeft-items[0].offsetLeft-x);if(d<bd){bd=d;best=i;}}if(tr.scrollLeft+tr.clientWidth>=tr.scrollWidth-4)best=n-1;pill.textContent=(best+1)+'/'+n;}
     tr.addEventListener('scroll',function(){clearTimeout(tr._p);tr._p=setTimeout(upd,60);});
   });
+})();
+(function(){
+  /* help strip: slides in while scrolling down, hides on scroll up and near the top */
+  var st=document.querySelector('.strip'); if(!st) return;
+  var last=window.scrollY,tick=false;
+  function upd(){tick=false;if(document.documentElement.classList.contains('navlock'))return;var y=window.scrollY,d=y-last;
+    if(y<120)st.classList.remove('on');else if(d>6)st.classList.add('on');else if(d<-6)st.classList.remove('on');
+    if(Math.abs(d)>6||y<120)last=y;}
+  window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});
+  st.addEventListener('focusin',function(){st.classList.add('on');});
 })();
 document.querySelectorAll('[role=tablist]').forEach(function(tl){
   tl.addEventListener('click',function(e){var b=e.target.closest('[role=tab]');if(!b)return;
