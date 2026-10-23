@@ -100,7 +100,7 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 .cluster .s2{width:104px;height:104px;filter:saturate(.85) brightness(.94);position:relative;z-index:1}
 .cluster .s1{width:132px;height:132px;margin-inline:-22px;filter:saturate(.9) brightness(.97);position:relative;z-index:2}
 .cluster .main{width:180px;height:180px;border-width:5px;position:relative;z-index:3;box-shadow:0 10px 30px rgba(26,32,44,.18)}
-@media (max-width:520px){.cluster .s2{display:none}.cluster .s1{width:104px;height:104px}.cluster .main{width:150px;height:150px}}
+@media (max-width:520px){.cluster .s2{width:62px;height:62px;border-width:3px}.cluster .s1{width:86px;height:86px;border-width:3px}.pbtn:has(.s1){margin-inline:-14px}.cluster .main{width:128px;height:128px;border-width:4px}}
 .mname{display:flex;align-items:center;gap:28px;font:700 22px/1 var(--head);letter-spacing:-.03em}
 .mname button{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#222}
 .mname button:hover{background:var(--band)}
@@ -479,7 +479,7 @@ body.vlock{overflow:hidden}
 .statsS .stats{margin:0;padding:0;border:0}
 .stats b{font-size:clamp(24px,2.5vw,34px)}
 .stats span{font-size:16px}
-.mlink{display:inline-block;margin-top:6px;font:700 clamp(26px,2.5vw,34px)/1.2 var(--head);letter-spacing:-.03em;color:var(--brand-link);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.mlink{display:block;width:max-content;margin-top:6px;font:700 clamp(26px,2.5vw,34px)/1.2 var(--head);letter-spacing:-.03em;color:var(--brand-link);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
 .mlink:hover{color:var(--brand)}
 .mentor .msub{margin-top:22px;font-size:14.5px;color:#555}
 .mentor .mquote{margin-top:48px}
@@ -677,9 +677,84 @@ body{padding-bottom:44px}
   .bgrid::-webkit-scrollbar{display:none}
   .bcard{scroll-snap-align:start}
   .bcard h3{font-size:17px;margin-top:16px}
-  .strip p{font-size:15px;gap:8px;min-height:48px}
-  .strip .lg{display:none}
-  body{padding-bottom:48px}
+  .strip p{font-size:14.5px;gap:4px 8px;padding-block:10px;line-height:1.35}
+  .strip .l1,.strip .l3{flex-basis:100%;text-align:center}
+  body{padding-bottom:96px}
+}
+/* mobile design (Home — Mobile) */
+.msearch,.mhead{display:none}
+@media (max-width:1100px){
+  .nav{flex-wrap:wrap;row-gap:14px}
+  .links{display:flex;order:3;flex:0 0 auto;width:calc(100% + var(--gut) + var(--gutR));margin:0 calc(-1 * var(--gutR)) 0 calc(-1 * var(--gut));padding:4px var(--gutR) 6px var(--gut);box-sizing:border-box;gap:10px;overflow-x:auto;scrollbar-width:none}
+  .links::-webkit-scrollbar{display:none}
+  .links li{position:static;flex:none}
+  .nlink{height:44px;padding:0 14px 0 10px;border-radius:999px;background:var(--white);box-shadow:0 2px 8px rgba(26,32,44,.1);font-size:14.5px;gap:6px}
+  .nlink::after{display:none}
+  .n3d{width:24px;height:24px}
+  .links .chev{width:14px;height:14px}
+  .mega,.dd{position:fixed;inset:auto 0 0 0;top:auto;height:auto;z-index:140;background:none}
+  .mega .wrap{padding:0;max-width:none}
+  .mm-panel,.dd{grid-template-columns:1fr;gap:16px;margin:0;max-height:78vh;overflow-y:auto;padding:24px max(20px,var(--gutR)) max(28px,env(safe-area-inset-bottom,0px)) max(20px,var(--gut));border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.18)}
+  .dd{min-width:0;left:0}
+  .mega a{font-size:15.5px;padding:9px 10px}
+  body.navsheet::after{content:"";position:fixed;inset:0;z-index:130;background:rgba(12,14,20,.45)}
+  body.navsheet{overflow:hidden}
+  body.navsheet .hero,body.slock .hero{z-index:auto}
+}
+@media (max-width:759px){
+  .nav{padding-block:14px 8px}
+  .logo img{height:46px}
+  .heroin{padding-block:18px 28px;gap:22px}
+  .hero h1{font-size:24px;line-height:1.25;max-width:15em}
+  .msearch{display:flex;align-items:center;gap:14px;width:100%;height:62px;padding:0 24px;box-sizing:border-box;border-radius:999px;background:var(--white);box-shadow:0 6px 20px rgba(26,32,44,.1);font:400 16px/1 var(--sans);color:#1d1d1d;text-align:left}
+  .msearch .ico{width:22px;height:22px;stroke-width:2.2}
+  .msearch span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .search{display:none}
+  .search.full{display:flex;flex-direction:column;gap:10px;position:fixed;inset:0;z-index:150;max-width:none;border:0;border-radius:0;box-shadow:none;background:var(--band);padding:max(14px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px));overflow-y:auto}
+  .search.full{align-items:stretch}
+  body.slock .strip{display:none}
+  .search.full .mhead{display:flex;align-items:center;justify-content:space-between;order:0;padding:4px 4px 6px;font:700 20px/1.2 var(--head);letter-spacing:-.02em}
+  .search.full .seg{order:1;background:var(--white);border-radius:20px;box-shadow:0 2px 10px rgba(26,32,44,.06)}
+  .search.full .seg[data-seg="uni"]{order:3}.search.full .seg[data-seg="spec"]{order:5}
+  .search.full .seg::before{display:none}
+  .search.full .seg.act{box-shadow:0 0 0 2px var(--ink)}
+  .search.full .segin{padding:16px 18px}
+  .search.full .spanel,.search.full .spanel[data-seg]{position:static;order:2;width:auto;max-height:none;overflow:visible;border-radius:20px;padding:16px;margin:-2px 0 4px;box-shadow:0 2px 10px rgba(26,32,44,.06);z-index:auto}
+  .search.full .spanel[data-seg="uni"]{order:4}.search.full .spanel[data-seg="spec"]{order:6}
+  .search.full .sp-head{display:none}
+  .search.full .sp-scroll{max-height:46vh;overflow-y:auto}
+  .search.full .sbtn{order:9;position:sticky;bottom:0;margin-top:auto;height:54px;width:100%;box-shadow:0 8px 20px rgba(222,34,50,.3)}
+  body.slock::after{display:none}
+  .banner{aspect-ratio:auto;object-fit:fill;border-radius:20px}
+  .mentor .grid{gap:28px;text-align:center}
+  .mentor .grid>div:first-child{display:contents}
+  .mh{order:1;font-size:24px;line-height:1.3}
+  .mh .mlink{display:inline;font-size:inherit;margin:0;text-decoration-thickness:1.5px;text-underline-offset:4px}
+  .mentor .msub{order:2;margin-top:-14px;font-size:13.5px}
+  .mright{order:3}
+  .mentor .mquote{order:4;margin:0 auto;display:block;max-width:34ch;text-align:center}
+  .mquote .tqm{display:inline;width:22px;height:18px;vertical-align:-2px;margin-right:4px}
+  .mquote blockquote{display:inline;font-size:14.5px;font-style:italic}
+  .tcard{display:grid;grid-template-columns:1fr auto;align-items:end;gap:14px 8px;padding:18px 14px 16px}
+  .tcard .t3d{grid-column:1/-1;width:40px;height:40px}
+  .tcard .go{display:block;margin:0;width:18px;height:18px}
+  .tcols{grid-template-columns:1fr 1fr;gap:36px 14px;text-align:center}
+  .tcols>div{grid-template-columns:none;justify-items:center;row-gap:8px}
+  .tcols .ticon{grid-row:auto;width:62px;height:62px}
+  .tcols>div>:not(.ticon){grid-column:auto}
+  .tcols h3{font-size:17px}
+  .tcols p{font-size:13.5px}
+  .dgrid{grid-template-columns:1fr;gap:16px}
+  .dcard{display:grid;grid-template-columns:84px 1fr;column-gap:16px;row-gap:4px;align-items:center;text-align:left;padding:22px 18px;border-radius:24px}
+  .dcard .dimg{grid-row:1/4;width:76px;height:76px;margin:0}
+  .dcard h3{font-size:16.5px;text-wrap:pretty}
+  .dcard .s{font-size:12.5px}
+  .dgo{justify-self:start;padding-top:8px;font-size:14.5px}
+  .sres-act{flex-wrap:wrap;gap:8px}
+  .sres-sort{white-space:nowrap}
+  .faqhead{text-align:center}
+  .faqhead .hd{text-align:center;font-size:28px}
+  .faqhead p br{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -745,7 +820,9 @@ body{padding-bottom:44px}
     <div class="mega" id="mmPrograms" hidden><div class="wrap"><div class="mm-panel"><div><p class="mm-k">Postgraduate</p><ul><li><a href="https://www.yourdegree.com/online-mba/"><img src="assets/img/cacace75bc.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Master of Business Administration (MBA)</a></li><li><a href="https://www.yourdegree.com/online-ma/"><img src="assets/img/73a8703195.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Master of Arts (MA)</a></li><li><a href="https://www.yourdegree.com/online-mca/"><img src="assets/img/451892a184.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Master of Computer Applications (MCA)</a></li><li><a href="https://www.yourdegree.com/online-mcom/"><img src="assets/img/ed69ff81f5.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Master of Commerce (M.Com)</a></li><li><a href="https://www.yourdegree.com/online-msc/"><img src="assets/img/ed69ff81f5.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Master of Science (M.Sc)</a></li><li><a href="https://www.yourdegree.com/online-mlis/"><img src="assets/img/73a8703195.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Master of Library and Information Science (MLIS)</a></li><li><a href="https://www.yourdegree.com/online-msw/"><img src="assets/img/73a8703195.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Master of Social Work (MSW)</a></li><li><a href="https://www.yourdegree.com/online-pgdca/"><img src="assets/img/451892a184.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Post Graduate Diploma in Computer Applications (PGDCA)</a></li></ul></div><div><p class="mm-k">Undergraduate</p><ul><li><a href="https://www.yourdegree.com/online-bba/"><img src="assets/img/cacace75bc.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Bachelor of Business Administration (BBA)</a></li><li><a href="https://www.yourdegree.com/online-bca/"><img src="assets/img/451892a184.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Bachelor of Computer Applications (BCA)</a></li><li><a href="https://www.yourdegree.com/online-bcom/"><img src="assets/img/ed69ff81f5.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Bachelor of Commerce (B.Com)</a></li><li><a href="https://www.yourdegree.com/online-ba/"><img src="assets/img/73a8703195.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Bachelor of Arts (BA)</a></li><li><a href="https://www.yourdegree.com/online-blis/"><img src="assets/img/73a8703195.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Bachelor of Library and Information Science (BLIS)</a></li><li><a href="https://www.yourdegree.com/online-bsc/"><img src="assets/img/ed69ff81f5.webp" alt="" width="28" height="28" loading="lazy" decoding="async">Bachelor of Science (B.Sc)</a></li></ul></div></div></div></div>
     <div class="heroin">
       <h1 class="hd">Find the right <em>online degree</em> for your career goals</h1>
+      <button type="button" class="msearch" id="msOpen" aria-haspopup="dialog" aria-controls="ydSearch"><svg class="ico"><use href="#i-search"/></svg><span id="msLabel">Search degrees</span></button>
       <form class="search" id="ydSearch" role="search" autocomplete="off">
+        <div class="mhead"><b>Find your degree</b><button type="button" class="sp-x" id="msClose" aria-label="Close search"><svg class="ico"><use href="#i-close"/></svg></button></div>
         <div class="seg" data-seg="degree">
           <label class="segin" for="qDeg"><b>Degree</b><input id="qDeg" type="text" placeholder="MBA, BCA, B.Com..." role="combobox" aria-expanded="false" aria-controls="spanel" aria-autocomplete="list"></label>
           <button type="button" class="segclr" data-clear="degree" aria-label="Clear degree" hidden><svg class="ico"><use href="#i-close"/></svg></button>
@@ -785,7 +862,7 @@ body{padding-bottom:44px}
 </section>
 <section class="bannerS">
   <div class="wrap">
-    <img class="banner" src="assets/img/banner_red.webp" alt="Only UGC-accredited online courses. Recognised degrees. Real opportunities." width="2600" height="478" fetchpriority="high" decoding="async">
+    <picture><source media="(max-width:759px)" srcset="assets/img/banner_red_m.webp" width="1000" height="610"><img class="banner" src="assets/img/banner_red.webp" alt="Only UGC-accredited online courses. Recognised degrees. Real opportunities." width="2600" height="478" fetchpriority="high" decoding="async"></picture>
     <div class="pager">
       <button class="pg-btn prev" aria-label="Previous"><svg class="ico"><use href="#i-back"/></svg></button>
       <span class="pg-pill">1/4</span><span class="pg-dash"></span><span class="pg-dash"></span><span class="pg-dash"></span>
@@ -809,8 +886,7 @@ body{padding-bottom:44px}
   <div class="wrap">
     <div class="grid">
       <div>
-        <h2 class="mh">Great careers start with a conversation, maybe with <strong id="cHead">Ananya Rao.</strong></h2>
-        <a class="mlink" href="#">Connect Now</a>
+        <h2 class="mh">Great careers start with a conversation, maybe with <strong id="cHead">Ananya Rao.</strong> <a class="mlink" href="#">Connect Now</a></h2>
         <p class="msub">Book free career counselling with trusted counsellors</p>
         <figure class="mquote"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote id="cQuote">I came in confused about AI vs data science. I left with a plan I actually understood. Thank you, Ananya.</blockquote></figure>
       </div>
@@ -965,7 +1041,7 @@ body{padding-bottom:44px}
   <div class="wrap faqgrid">
     <div class="faqhead">
       <h2 class="hd">Your questions, answered</h2>
-      <p>Can’t find what you’re looking for?<br>Visit our <a href="#">Help Centre</a>.</p>
+      <p>Can’t find what you’re looking for?<br> Visit our <a href="#">Help Centre</a>.</p>
     </div>
     <div class="faqlist" id="faqlist"><details class="faq" open><summary>Are the programmes on YourDegree UGC-recognised?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>Yes. YourDegree lists only UGC-entitled online programmes from recognised universities, such as D Y Patil, Chandigarh, Kurukshetra and O.P. Jindal Global University. Each programme shows the university’s NAAC grade so you can check it before you apply.</p></details><details class="faq"><summary>How does YourDegree help students choose the right course?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>Speak to a certified counsellor, or talk it through with Disha, our AI voice counsellor. Both ask about your goals, your schedule and your budget, compare programmes side by side, and recommend a best fit with two more to consider.</p></details><details class="faq"><summary>Is YourDegree connected with recognised universities?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>YourDegree is an online platform that helps students discover, compare and apply to online degree programmes offered by recognised universities across India.</p></details><details class="faq"><summary>Does YourDegree charge students for counselling?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>No. Counselling calls are free. When you enrol, you pay the university directly, never YourDegree.</p></details><details class="faq"><summary>Are EMI options available for online degree programmes?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>Many universities let you pay semester by semester, and several, including Chandigarh University Online and D Y Patil University Online, offer no-cost EMI. Use the Fee & EMI Calculator to see what a programme costs per month.</p></details></div>
   </div>
@@ -981,7 +1057,7 @@ body{padding-bottom:44px}
   </div>
 </div>
 <div class="strip" role="complementary" aria-label="Get help">
-  <p><span class="lg">Questions about your degree?</span> <a href="#">Request a call <svg class="ico"><use href="#i-out"/></svg></a> <span>or</span> <a href="https://wa.me/918976805707" target="_blank" rel="noopener"><svg class="wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.3 4.8 4.9-1.3A9.8 9.8 0 1 0 12 2.2Zm0 17.9a8.1 8.1 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8.1 8.1 0 1 1 12 20.1Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>WhatsApp us</a> <span class="lg">We’d love to help.</span></p>
+  <p><span class="l1">Questions about your degree?</span> <a href="#">Request a call <svg class="ico"><use href="#i-out"/></svg></a> <span>or</span> <a href="https://wa.me/918976805707" target="_blank" rel="noopener"><svg class="wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.3 4.8 4.9-1.3A9.8 9.8 0 1 0 12 2.2Zm0 17.9a8.1 8.1 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8.1 8.1 0 1 1 12 20.1Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>WhatsApp us</a> <span class="l3">We’d love to help.</span></p>
 </div>
 <footer class="foot">
   <div class="wrap">
@@ -1115,10 +1191,10 @@ body{padding-bottom:44px}
 })();
 (function(){
   var hero=document.querySelector('.hero'),btns=[].slice.call(document.querySelectorAll('.links .nlink[aria-controls]'));
-  function close(except){btns.forEach(function(b){if(b===except)return;b.setAttribute('aria-expanded','false');document.getElementById(b.getAttribute('aria-controls')).hidden=true;});hero.classList.toggle('mm-on',!!except&&except.getAttribute('aria-controls')==='mmPrograms');}
+  function close(except){btns.forEach(function(b){if(b===except)return;b.setAttribute('aria-expanded','false');document.getElementById(b.getAttribute('aria-controls')).hidden=true;});hero.classList.toggle('mm-on',!!except&&except.getAttribute('aria-controls')==='mmPrograms');document.body.classList.toggle('navsheet',!!except&&matchMedia('(max-width:1100px)').matches);}
   btns.forEach(function(b){
     var m=document.getElementById(b.getAttribute('aria-controls'));
-    b.addEventListener('click',function(e){e.stopPropagation();var o=b.getAttribute('aria-expanded')!=='true';close(o?b:null);b.setAttribute('aria-expanded',o);m.hidden=!o;});
+    b.addEventListener('click',function(e){e.stopPropagation();var o=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',o);m.hidden=!o;close(o?b:null);});
   });
   document.addEventListener('click',function(e){if(!e.target.closest('.mm-panel,.dd'))close(null);});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'){var o=btns.filter(function(b){return b.getAttribute('aria-expanded')==='true';})[0];close(null);if(o)o.focus();}});
@@ -1148,6 +1224,6 @@ document.querySelectorAll('[role=tablist]').forEach(function(tl){
 });
 </script>
 
-<script src="assets/js/search.js?v=68a65191" defer></script>
+<script src="assets/js/search.js?v=5e5c2b03" defer></script>
 </body>
 </html>
