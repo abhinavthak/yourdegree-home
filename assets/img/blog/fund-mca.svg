@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff8ec"/><stop offset="1" stop-color="#fde9c9"/></linearGradient>
+<linearGradient id="pig" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8f9a"/><stop offset="1" stop-color="#e5485a"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd36b"/><stop offset="1" stop-color="#f0a92e"/></linearGradient>
+<filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#8a5a12" flood-opacity=".16"/></filter>
+</defs>
+<rect width="600" height="400" fill="url(#bg)"/>
+<circle cx="520" cy="80" r="110" fill="#fbdca6" opacity=".55"/><circle cx="60" cy="350" r="100" fill="#fbdca6" opacity=".5"/>
+<ellipse cx="300" cy="352" rx="220" ry="14" fill="#8a5a12" opacity=".1"/>
+<!-- EMI calendar -->
+<g filter="url(#sh)"><rect x="350" y="96" width="186" height="210" rx="18" fill="#fff"/></g>
+<rect x="350" y="96" width="186" height="50" rx="18" fill="#191e27"/><rect x="350" y="128" width="186" height="18" fill="#191e27"/>
+<text x="443" y="128" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="17" fill="#fff" letter-spacing="1">EMI PLAN</text>
+<rect x="384" y="86" width="8" height="22" rx="4" fill="#da202f"/><rect x="494" y="86" width="8" height="22" rx="4" fill="#da202f"/>
+<g font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="11" fill="#fff" text-anchor="middle">
+<g><rect x="368" y="162" width="40" height="36" rx="8" fill="#2fa84f"/><path d="M380 180l5 5 10-11" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<g><rect x="423" y="162" width="40" height="36" rx="8" fill="#2fa84f"/><path d="M435 180l5 5 10-11" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<g><rect x="478" y="162" width="40" height="36" rx="8" fill="#2fa84f"/><path d="M490 180l5 5 10-11" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<rect x="368" y="210" width="40" height="36" rx="8" fill="#fde7e9" stroke="#da202f" stroke-width="2"/>
+<rect x="423" y="210" width="40" height="36" rx="8" fill="#f1f2f5"/><rect x="478" y="210" width="40" height="36" rx="8" fill="#f1f2f5"/>
+</g>
+<rect x="368" y="262" width="150" height="26" rx="13" fill="#fff4dc"/>
+<text x="443" y="280" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="13" fill="#8a5a12">0% interest options</text>
+<!-- piggy bank -->
+<g filter="url(#sh)">
+<ellipse cx="210" cy="238" rx="112" ry="82" fill="url(#pig)"/>
+<path d="M136 180l-20-38 46 22z" fill="#e5485a"/>
+<rect x="140" y="296" width="30" height="40" rx="10" fill="#d93a4c"/><rect x="240" y="296" width="30" height="40" rx="10" fill="#d93a4c"/>
+<ellipse cx="318" cy="232" rx="24" ry="30" fill="#ff8f9a"/>
+</g>
+<circle cx="312" cy="224" r="4" fill="#8e1b26"/><circle cx="324" cy="224" r="4" fill="#8e1b26"/>
+<circle cx="268" cy="206" r="7" fill="#3a1218"/>
+<rect x="176" y="164" width="64" height="10" rx="5" fill="#8e1b26"/>
+<path d="M98 238c-20 0-24 22-8 26" stroke="#e5485a" stroke-width="6" fill="none" stroke-linecap="round"/>
+<!-- coin dropping -->
+<g filter="url(#sh)"><circle cx="208" cy="112" r="30" fill="url(#gold)"/></g><circle cx="208" cy="112" r="22" fill="none" stroke="#c98418" stroke-width="2.5"/>
+<text x="208" y="121" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="24" fill="#b9741a">₹</text>
+<path d="M190 66v14M208 58v16M226 66v14" stroke="#f0a92e" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+<!-- chip -->
+<rect x="28" y="28" width="127" height="48" rx="24" fill="#fff"/><text x="91" y="59" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="21" fill="#8a5a12">MCA</text>
+</svg>

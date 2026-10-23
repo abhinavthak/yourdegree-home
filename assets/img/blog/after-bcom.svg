@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eefaf3"/><stop offset="1" stop-color="#d4f0e0"/></linearGradient>
+<filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#14532d" flood-opacity=".16"/></filter>
+</defs>
+<rect width="600" height="400" fill="url(#bg)"/>
+<circle cx="520" cy="70" r="110" fill="#bfe8d0" opacity=".6"/><circle cx="60" cy="360" r="100" fill="#bfe8d0" opacity=".55"/>
+<ellipse cx="300" cy="354" rx="230" ry="14" fill="#14532d" opacity=".1"/>
+<!-- steps -->
+<g filter="url(#sh)">
+<rect x="96" y="268" width="104" height="80" rx="10" fill="#ffffff"/>
+<rect x="200" y="214" width="104" height="134" rx="10" fill="#ffffff"/>
+<rect x="304" y="160" width="104" height="188" rx="10" fill="#ffffff"/>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" font-weight="800" text-anchor="middle">
+<text x="148" y="316" font-size="20" fill="#14532d">B.Com</text>
+<text x="252" y="262" font-size="20" fill="#14532d">M.Com</text>
+<text x="356" y="208" font-size="20" fill="#da202f">MBA</text>
+</g>
+<g fill="#e3f3ea"><rect x="116" y="328" width="64" height="8" rx="4"/><rect x="220" y="276" width="64" height="8" rx="4"/><rect x="220" y="292" width="44" height="8" rx="4"/><rect x="324" y="222" width="64" height="8" rx="4"/><rect x="324" y="238" width="48" height="8" rx="4"/><rect x="324" y="254" width="56" height="8" rx="4"/></g>
+<!-- flag -->
+<path d="M356 92v68" stroke="#191e27" stroke-width="5" stroke-linecap="round"/>
+<path d="M358 94h52l-12 15 12 15h-52z" fill="#da202f"/>
+<!-- arrow path -->
+<path d="M120 252c40-30 70-40 108-58s70-46 104-62" stroke="#2fa84f" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="2 12"/>
+<!-- signpost -->
+<path d="M486 120v220" stroke="#6b4a2b" stroke-width="10" stroke-linecap="round"/>
+<g filter="url(#sh)">
+<path d="M436 132h88l20 18-20 18h-88z" fill="#191e27"/>
+<path d="M536 186h-88l-20 18 20 18h88z" fill="#2fa84f"/>
+<path d="M436 240h88l20 18-20 18h-88z" fill="#da202f"/>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="15" fill="#fff" text-anchor="middle">
+<text x="482" y="155">CA</text><text x="490" y="209">CFA</text><text x="482" y="263">MBA</text>
+</g>
+<!-- chip -->
+<rect x="28" y="28" width="139" height="48" rx="24" fill="#fff"/><text x="97" y="59" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="21" fill="#14532d">B.Com</text>
+</svg>
