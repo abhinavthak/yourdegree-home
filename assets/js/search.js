@@ -68,6 +68,15 @@
     glide.style.width = el.offsetWidth + 'px'; glide.style.transform = 'translateX(' + el.offsetLeft + 'px)';
     if (!prev) { void glide.offsetWidth; glide.classList.remove('jump'); }
   }
+  /* desktop: end the panel a comfortable gap above the bottom of the screen (and the help strip) */
+  function fitPanel() {
+    if (panel.hidden || mq.matches) { panel.style.maxHeight = ''; return; }
+    var st = document.querySelector('.strip'), below = st && st.classList.contains('on') ? st.offsetHeight : 0;
+    var room = window.innerHeight - (form.getBoundingClientRect().bottom + 14) - below - 32;
+    panel.style.maxHeight = Math.max(260, Math.min(560, room)) + 'px';
+  }
+  window.addEventListener('resize', fitPanel);
+  window.addEventListener('scroll', function () { if (!panel.hidden) fitPanel(); }, { passive: true });
   function setActive(seg) {
     var prev = active;
     if (seg && prev && seg !== prev) panel.style.setProperty('--dx', (ORDER.indexOf(seg) > ORDER.indexOf(prev) ? 16 : -16) + 'px');
@@ -77,7 +86,7 @@
     form.querySelectorAll('.seg').forEach(function (s) { s.classList.toggle('act', s.dataset.seg === seg); });
     [qDeg, qUni, qSpec].forEach(function (i) { i.setAttribute('aria-expanded', String(i.closest('.seg').dataset.seg === seg)); });
     if (!seg) { panel.classList.remove('sw'); delete panel.dataset.seg; panel.hidden = true; if (!form.classList.contains('full')) document.body.classList.remove('slock'); syncFields(); return; }
-    load().then(function () { render(); panel.hidden = false; if (mq.matches) document.body.classList.add('slock'); });
+    load().then(function () { render(); panel.hidden = false; fitPanel(); if (mq.matches) document.body.classList.add('slock'); });
   }
   function syncFields() {
     if (active !== 'degree') qDeg.value = state.degree ? DEG[state.degree][0] : '';
