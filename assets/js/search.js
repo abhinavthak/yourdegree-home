@@ -24,7 +24,7 @@
   var LOGO = { 'D.Y. Patil University': '708eddc90e', 'Chandigarh University': '502341bb01', 'Kurukshetra University': '0d254a487f', 'O.P. Jindal Global University': 'f62dd3ebc9' };
   var img = function (k) { return '<img src="assets/img/' + k + '.webp" alt="" width="40" height="40">'; };
 
-  var data = null, loading = null;
+  var data = null, loading = null, links = {}, uniu = {};
   var state = { degree: null, uni: null, spec: null, budget: 'any' };
   var active = null, from = null, shown = 12, sort = 'fee';
 
@@ -35,7 +35,8 @@
 
   function load() {
     if (data) return Promise.resolve(data);
-    if (!loading) loading = fetch('assets/data/programs.json?v=43c8bfc6').then(function (r) { return r.json(); }).then(function (j) {
+    if (!loading) loading = fetch('assets/data/programs.json?v=b414ee14').then(function (r) { return r.json(); }).then(function (j) {
+      links = j.links || {}; uniu = j.uniu || {};
       data = j.p.map(function (r) {
         return { d: r[0], u: j.unis[r[1]], s: r[2], f: r[3], n: r[4], y: r[5], url: SITE + r[6] };
       }).filter(function (p) { return DEG[p.d]; });
@@ -238,8 +239,25 @@
     if (!state.degree && tyDeg) Object.keys(DEG).forEach(function (k) { if (norm(DEG[k][0]) === tyDeg || k === tyDeg) state.degree = k; });
     setActive(null); qDeg.blur(); qUni.blur(); qSpec.blur();
     if (form.classList.contains('full')) { form.classList.remove('full'); document.body.classList.remove('slock'); msOpen.setAttribute('aria-expanded', 'false'); }
-    load().then(function () { shown = 12; showResults(true); });
+    if (!state.degree && !state.uni && !state.spec) { setActive('degree'); qDeg.focus(); return; }
+    var tab = window.open('', '_blank');
+    load().then(function () { var url = pageFor(); if (tab) tab.location.href = url; else location.href = url; });
   });
+  /* the most specific yourdegree.com page for the current selection */
+  function pageFor() {
+    var d = state.degree, u = state.uni, sp = state.spec, deg = d ? 'online-' + d + '/' : '';
+    if (d && u && sp) { var hit = data.filter(function (p) { return p.d === d && p.u === u && p.s === sp; })[0]; if (hit) return hit.url; }
+    if (d && u && links[d + '|u|' + u]) return SITE + links[d + '|u|' + u];
+    if (d && sp && links[d + '|s|' + sp]) return SITE + links[d + '|s|' + sp];
+    if (d && u) { var one = data.filter(function (p) { return p.d === d && p.u === u; }); if (one.length === 1) return one[0].url; }
+    if (d) return SITE + deg;
+    if (u && sp) { var m = data.filter(function (p) { return p.u === u && p.s === sp; }); if (m.length === 1) return m[0].url; }
+    if (u && uniu[u]) return SITE + uniu[u];
+    if (sp) { var by = {}; data.forEach(function (p) { if (p.s === sp) by[p.d] = (by[p.d] || 0) + 1; });
+      var best = Object.keys(by).sort(function (a, b) { return by[b] - by[a]; })[0];
+      if (best) return SITE + (links[best + '|s|' + sp] || 'online-' + best + '/'); }
+    return SITE;
+  }
   function initials(u) { return u.replace(/\(.*?\)/g, '').split(/\s+/).filter(function (w) { return /^[A-Z]/.test(w) && !/^(Of|And|The)$/.test(w); }).slice(0, 2).map(function (w) { return w[0]; }).join(''); }
   var NAAC_RANK = { 'A++': 6, 'A+': 5, 'A': 4, 'B++': 3, 'B+': 2, 'B': 1 };
   function showResults(scroll) {
