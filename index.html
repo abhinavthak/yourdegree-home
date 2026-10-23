@@ -897,11 +897,12 @@ html.navlock .mega{overscroll-behavior:contain}
 @media (max-width:759px){
   .strip{display:none!important}
   body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
-  .fab{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:90;padding:10px max(16px,env(safe-area-inset-right,0px)) max(10px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:var(--white);box-shadow:0 -4px 16px rgba(26,32,44,.1)}
+  .fab{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:90;padding:10px max(16px,env(safe-area-inset-right,0px)) max(10px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:var(--white);box-shadow:0 -4px 16px rgba(26,32,44,.1);transform:translateY(110%);visibility:hidden;transition:transform .32s cubic-bezier(.4,0,.2,1),visibility 0s linear .32s}
+  .fab.on{transform:none;visibility:visible;transition:transform .32s cubic-bezier(.4,0,.2,1)}
   .fab a{display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:12px;font:600 15.5px/1 var(--sans);text-decoration:none}
   .fab a:active{transform:scale(.98)}
   .fab svg{width:20px;height:20px;fill:currentColor;flex:none}
-  .fab-call{background:var(--white);color:var(--brand-link);box-shadow:inset 0 0 0 1.5px var(--brand-link)}
+  .fab-call{background:var(--brand-cta);color:var(--white)}
   .fab-wa{background:#25d366;color:var(--white)}
   body.slock .fab{display:none}
 }
@@ -1365,7 +1366,7 @@ html.navlock .mega{overscroll-behavior:contain}
 (function(){
   var hero=document.querySelector('.hero'),btns=[].slice.call(document.querySelectorAll('.links .nlink[aria-controls]'));
   function close(except){btns.forEach(function(b){if(b===except)return;b.setAttribute('aria-expanded','false');document.getElementById(b.getAttribute('aria-controls')).hidden=true;});hero.classList.toggle('mm-on',!!except&&except.getAttribute('aria-controls')==='mmPrograms');lock(!!except);document.body.classList.toggle('navsheet',!!except&&matchMedia('(max-width:1100px)').matches);}
-  function place(b){if(!matchMedia('(max-width:1100px)').matches)return;var de=document.documentElement,st=document.querySelector('.strip');de.style.setProperty('--navtop',Math.max(16,Math.round(b.getBoundingClientRect().bottom+12))+'px');var fb=document.querySelector('.fab'),bh=fb&&getComputedStyle(fb).display!=='none'?fb.offsetHeight:(st&&st.classList.contains('on')&&getComputedStyle(st).display!=='none'?st.offsetHeight:0);de.style.setProperty('--stripH',bh+'px');}
+  function place(b){if(!matchMedia('(max-width:1100px)').matches)return;var de=document.documentElement,st=document.querySelector('.strip');de.style.setProperty('--navtop',Math.max(16,Math.round(b.getBoundingClientRect().bottom+12))+'px');var fb=document.querySelector('.fab'),bh=fb&&getComputedStyle(fb).display!=='none'?(fb.classList.contains('on')?fb.offsetHeight:0):(st&&st.classList.contains('on')&&getComputedStyle(st).display!=='none'?st.offsetHeight:0);de.style.setProperty('--stripH',bh+'px');}
   function lock(on){var de=document.documentElement;if(on===de.classList.contains('navlock'))return;var gap=window.innerWidth-de.clientWidth;de.classList.toggle('navlock',on);document.body.style.paddingRight=on&&gap>0?gap+'px':'';}
   btns.forEach(function(b){
     var m=document.getElementById(b.getAttribute('aria-controls'));
@@ -1419,10 +1420,10 @@ html.navlock .mega{overscroll-behavior:contain}
 })();
 (function(){
   /* help strip: slides in while scrolling down, hides on scroll up and near the top */
-  var st=document.querySelector('.strip'); if(!st) return;
+  var st=document.querySelector('.strip'),fb=document.querySelector('.fab'); if(!st) return;
   var last=window.scrollY,tick=false;
   function upd(){tick=false;if(document.documentElement.classList.contains('navlock'))return;var y=window.scrollY,d=y-last;
-    if(y<120)st.classList.remove('on');else if(d>6)st.classList.add('on');else if(d<-6)st.classList.remove('on');
+    var on=st.classList.contains('on');if(y<120)on=false;else if(d>6)on=true;else if(d<-6)on=false;st.classList.toggle('on',on);if(fb)fb.classList.toggle('on',on);
     if(Math.abs(d)>6||y<120)last=y;}
   window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});
   st.addEventListener('focusin',function(){st.classList.add('on');});
