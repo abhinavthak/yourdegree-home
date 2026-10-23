@@ -267,8 +267,7 @@
     setActive(null); qDeg.blur(); qUni.blur(); qSpec.blur();
     if (form.classList.contains('full')) { form.classList.remove('full'); document.body.classList.remove('slock'); msOpen.setAttribute('aria-expanded', 'false'); }
     if (!state.degree && !state.uni && !state.spec) { setActive('degree'); qDeg.focus(); return; }
-    var tab = window.open('', '_blank');
-    load().then(function () { var url = pageFor(); if (tab) tab.location.href = url; else location.href = url; });
+    load().then(function () { location.href = pageFor(); });
   });
   /* the most specific yourdegree.com page for the current selection */
   function pageFor() {
