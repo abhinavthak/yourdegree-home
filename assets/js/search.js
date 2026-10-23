@@ -60,12 +60,23 @@
   function count(o) { return data.filter(function (p) { return match(p, o); }).length; }
 
   /* ---------- segments ---------- */
+  var glide = form.querySelector('.sglide'), ORDER = ['degree', 'uni', 'spec'];
+  function moveGlide(seg, prev) {
+    if (!glide || !seg) return;
+    var el = form.querySelector('.seg[data-seg="' + seg + '"]');
+    glide.classList.toggle('jump', !prev);
+    glide.style.width = el.offsetWidth + 'px'; glide.style.transform = 'translateX(' + el.offsetLeft + 'px)';
+    if (!prev) { void glide.offsetWidth; glide.classList.remove('jump'); }
+  }
   function setActive(seg) {
+    var prev = active;
+    if (seg && prev && seg !== prev) panel.style.setProperty('--dx', (ORDER.indexOf(seg) > ORDER.indexOf(prev) ? 16 : -16) + 'px');
+    moveGlide(seg, prev);
     active = seg;
     form.classList.toggle('on', !!seg);
     form.querySelectorAll('.seg').forEach(function (s) { s.classList.toggle('act', s.dataset.seg === seg); });
     [qDeg, qUni, qSpec].forEach(function (i) { i.setAttribute('aria-expanded', String(i.closest('.seg').dataset.seg === seg)); });
-    if (!seg) { panel.hidden = true; if (!form.classList.contains('full')) document.body.classList.remove('slock'); syncFields(); return; }
+    if (!seg) { panel.classList.remove('sw'); delete panel.dataset.seg; panel.hidden = true; if (!form.classList.contains('full')) document.body.classList.remove('slock'); syncFields(); return; }
     load().then(function () { render(); panel.hidden = false; if (mq.matches) document.body.classList.add('slock'); });
   }
   function syncFields() {
@@ -90,10 +101,12 @@
       '<svg class="ico"><use href="#i-close"/></svg></button></div>';
   }
   function render() {
+    var swapped = panel.dataset.seg && panel.dataset.seg !== active && !panel.hidden;
     panel.dataset.seg = active;
     if (active === 'degree') renderDegree();
     else if (active === 'uni') renderUni();
     else renderSpec();
+    if (swapped) { panel.classList.remove('sw'); void panel.offsetWidth; panel.classList.add('sw'); }
   }
   function renderDegree() {
     var q = norm(qDeg.value), html = sheetHead('Choose a degree');
@@ -303,6 +316,7 @@
     load().then(function () { shown = 12; showResults(true); });
   };
 
+  window.addEventListener('resize', function () { if (active) moveGlide(active, active); });
   syncFields();
   ['pointerenter', 'focusin'].forEach(function (ev) { form.addEventListener(ev, load, { once: true }); });
 })();

@@ -931,7 +931,26 @@ html.navlock .mega{overscroll-behavior:contain}
 .spanel .sp-tx .sp-tile{min-height:84px;justify-content:flex-end;gap:14px}
 @media (max-width:1100px) and (min-width:760px){.spanel .sp-tiles{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:759px){.spanel .sp-tiles,.search.full .spanel .sp-tiles{grid-template-columns:repeat(2,1fr);gap:10px}.spanel .sp-tile{min-height:104px;gap:12px}.spanel .sp-tile>span:not(.sp-logo){font-size:13.5px;-webkit-line-clamp:3}.search.full .sbtn,.search.full .seg{flex:none}.search.full .spanel .sp-k{text-transform:none;letter-spacing:0;font-size:13px}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Airbnb-style search motion (desktop) */
+.sglide{display:none}
+@media (min-width:760px){
+  .search{transition:background .25s ease,box-shadow .25s ease}
+  .sglide{display:block;position:absolute;z-index:0;top:6px;bottom:6px;left:0;width:0;border-radius:999px;background:var(--white);box-shadow:0 6px 20px rgba(0,0,0,.12);opacity:0;pointer-events:none;transition:transform .38s cubic-bezier(.2,.8,.2,1),width .38s cubic-bezier(.2,.8,.2,1),opacity .2s ease}
+  .search.on .sglide{opacity:1}
+  .sglide.jump{transition:opacity .2s ease}
+  .seg{z-index:1}
+  .search.on .seg.act{background:transparent;box-shadow:none}
+  .search.on .seg:not(.act):hover{background:#dddee1}
+  .sbtn,.search.on .sbtn{width:auto;min-width:48px;padding:0 14px;gap:0;transition:background .2s,padding .3s cubic-bezier(.2,.8,.2,1),gap .3s cubic-bezier(.2,.8,.2,1)}
+  .sbtxt,.search.on .sbtxt{display:inline-block;max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transition:max-width .3s cubic-bezier(.2,.8,.2,1),opacity .2s ease}
+  .search.on .sbtn{padding:0 20px 0 16px;gap:8px}
+  .search.on .sbtxt{max-width:80px;opacity:1}
+  .spanel:not([hidden]){animation:spIn .26s cubic-bezier(.2,.8,.2,1)}
+  .spanel.sw>*{animation:spSwap .28s ease both}
+  @keyframes spIn{from{opacity:0;transform:translateY(-8px) scale(.985)}to{opacity:1;transform:none}}
+  @keyframes spSwap{from{opacity:0;transform:translateX(var(--dx,0))}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.spanel,.spanel>*{animation:none!important}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1016,6 +1035,7 @@ html.navlock .mega{overscroll-behavior:contain}
           <button type="button" class="segclr" data-clear="spec" aria-label="Clear specialisation" hidden><svg class="ico"><use href="#i-close"/></svg></button>
         </div>
         <button class="sbtn" type="submit" aria-label="Search"><svg class="ico"><use href="#i-search"/></svg><span class="sbtxt">Search</span></button>
+        <span class="sglide" aria-hidden="true"></span>
         <div class="spanel" id="spanel" hidden></div>
       </form>
     </div>
@@ -1459,6 +1479,6 @@ document.querySelectorAll('[role=tablist]').forEach(function(tl){
 });
 </script>
 
-<script src="assets/js/search.js?v=e87d61a7" defer></script>
+<script src="assets/js/search.js?v=2be01fc6" defer></script>
 </body>
 </html>
