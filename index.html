@@ -840,6 +840,21 @@ html.navlock .mega{overscroll-behavior:contain}
   .faq summary{font-size:16px;padding:20px 0}
   .faq p{font-size:14px;padding-right:8px}
 }
+/* phone/tablet nav: dropdown card under the chip row (Home Page — Mobile-2) */
+@media (max-width:1100px){
+  .mega{position:fixed;top:var(--navtop,150px);left:var(--gut);right:var(--gutR);bottom:auto;height:auto;z-index:140;background:none}
+  .mega .wrap{padding:0;margin:0;max-width:none}
+  .mega .mm-panel{margin:0;border-radius:20px;padding:18px 16px 14px;gap:14px;box-shadow:0 18px 50px rgba(0,0,0,.22);max-height:calc(100vh - var(--navtop,150px) - var(--stripH,0px) - 24px);max-height:calc(100dvh - var(--navtop,150px) - var(--stripH,0px) - 24px);overscroll-behavior:contain}
+  .mega .mm-k{font-size:13px;margin-bottom:4px}
+  .mega a{font-size:14px;padding:8px 8px;margin-left:-8px;gap:12px}
+  .mega .mm-promo,.mega .mu-progs{display:none}
+  .mega .mu-name{font-size:14.5px}
+  .mega img{width:24px;height:24px}
+  body.navsheet .strip{z-index:145}
+  body.navsheet .nlink[aria-expanded="true"]{position:relative;z-index:141;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+  body.navsheet .links{position:relative;z-index:141}
+  body.navsheet .nlink:not([aria-expanded="true"]){background:#d9dadd;box-shadow:none}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -1289,10 +1304,11 @@ html.navlock .mega{overscroll-behavior:contain}
 (function(){
   var hero=document.querySelector('.hero'),btns=[].slice.call(document.querySelectorAll('.links .nlink[aria-controls]'));
   function close(except){btns.forEach(function(b){if(b===except)return;b.setAttribute('aria-expanded','false');document.getElementById(b.getAttribute('aria-controls')).hidden=true;});hero.classList.toggle('mm-on',!!except&&except.getAttribute('aria-controls')==='mmPrograms');lock(!!except);document.body.classList.toggle('navsheet',!!except&&matchMedia('(max-width:1100px)').matches);}
+  function place(b){if(!matchMedia('(max-width:1100px)').matches)return;var de=document.documentElement,st=document.querySelector('.strip');de.style.setProperty('--navtop',Math.max(16,Math.round(b.getBoundingClientRect().bottom+12))+'px');de.style.setProperty('--stripH',(st&&getComputedStyle(st).display!=='none'?st.offsetHeight:0)+'px');}
   function lock(on){var de=document.documentElement;if(on===de.classList.contains('navlock'))return;var gap=window.innerWidth-de.clientWidth;de.classList.toggle('navlock',on);document.body.style.paddingRight=on&&gap>0?gap+'px':'';}
   btns.forEach(function(b){
     var m=document.getElementById(b.getAttribute('aria-controls'));
-    b.addEventListener('click',function(e){e.stopPropagation();var o=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',o);m.hidden=!o;close(o?b:null);});
+    b.addEventListener('click',function(e){e.stopPropagation();var o=b.getAttribute('aria-expanded')!=='true';if(o)place(b);b.setAttribute('aria-expanded',o);m.hidden=!o;close(o?b:null);});
   });
   document.addEventListener('click',function(e){if(!e.target.closest('.mm-panel,.dd'))close(null);});
   var rows=[].slice.call(document.querySelectorAll('.mu-list li')),panes=document.querySelectorAll('.mu-pane');
