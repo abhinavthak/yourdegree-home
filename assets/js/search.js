@@ -149,19 +149,17 @@
     var q = norm(qSpec.value === state.spec ? '' : qSpec.value), counts = {};
     data.forEach(function (p) { if ((!state.degree || p.d === state.degree) && (!state.uni || p.u === state.uni)) counts[p.s] = (counts[p.s] || 0) + 1; });
     var names = Object.keys(counts).filter(function (s) { return !q || q.split(' ').every(function (w) { return norm(s).indexOf(w) > -1; }); })
-      .sort(function (a, b) { return a.localeCompare(b); });
+      .sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b); });
     var total = count({ degree: state.degree, uni: state.uni, spec: null, budget: 'any' });
     var html = sheetHead('Choose a specialisation') + '<div class="sp-pills sp-any"><button type="button" role="option" class="sp-pill sp-big' + (!state.spec ? ' sel' : '') + '" data-spec="">' +
       '<svg class="ico sp-award" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 19 6v5.5c0 4-3 7.2-7 8.5-4-1.3-7-4.5-7-8.5V6z"/><path d="m8.8 11.3 2.2 2.2 4.2-4.3"/><path d="m8 18.5-1.5 3.5 3-1 1.5 1.8M16 18.5l1.5 3.5-3-1-1.5 1.8"/></svg>' +
       '<span><b>Select Any Specialisation</b><small>' + total + ' Programme' + (total === 1 ? '' : 's') + '</small></span></button></div>';
-    var letter = null;
+    html += '<div class="sp-pills sp-cards" role="listbox">';
     names.forEach(function (sp) {
-      var L = sp.charAt(0).toUpperCase();
-      if (L !== letter) { if (letter) html += '</div>'; letter = L; html += '<p class="sp-k sp-az">' + L + '</p><div class="sp-pills" role="listbox">'; }
-      html += '<button type="button" role="option" class="sp-pill sp-txt' + (state.spec === sp ? ' sel' : '') + '" data-spec="' + esc(sp) + '" title="' + esc(sp) + '">' +
-        '<span>' + esc(sp) + '</span><small>' + counts[sp] + '</small></button>';
+      html += '<button type="button" role="option" class="sp-card' + (state.spec === sp ? ' sel' : '') + '" data-spec="' + esc(sp) + '" title="' + esc(sp) + '">' +
+        '<b>' + esc(sp) + '</b><small>' + counts[sp] + ' Programme' + (counts[sp] === 1 ? '' : 's') + '</small></button>';
     });
-    if (letter) html += '</div>';
+    html += '</div>';
     if (!names.length) html += '<p class="sp-none">No specialisations match “' + esc(qSpec.value) + '”.</p>';
     panel.innerHTML = html;
   }

@@ -967,10 +967,20 @@ html.navlock .mega{overscroll-behavior:contain}
 .sp-pill .sp-award{width:30px;height:30px;stroke:#16181d;stroke-width:1.6;flex:none}
 .sp-pill.sp-big>span{display:grid;gap:3px;white-space:normal}
 .sp-pill.sp-big b{font:500 16.5px/1.2 var(--sans);color:#16181d}
+.sp-pill.sp-big b{white-space:nowrap}
+.sp-any .sp-pill.sp-big{width:max-content;min-width:100%;max-width:calc(200% + 12px)}
 .sp-pill.sp-big small{font:400 13px/1.2 var(--sans);color:#4a4f5a}
 .sp-pill.sp-txt{padding:0 8px 0 20px;justify-content:space-between}
 .sp-pill.sp-txt small{flex:none;min-width:26px;height:26px;padding:0 8px;box-sizing:border-box;border-radius:999px;background:#f1f2f4;display:grid;place-items:center;font:500 12px/1 var(--sans);color:#4a4f5a}
 .sp-pill.sp-txt.sel small{background:var(--white)}
+/* specialisation cards (Home Page — Search-6) */
+.sp-cards{margin-top:20px;row-gap:16px}
+.sp-card{all:unset;box-sizing:border-box;display:grid;gap:5px;align-content:center;min-height:58px;padding:10px 16px;border:1px solid #dcdde1;border-radius:14px;background:var(--white);cursor:pointer;min-width:0;transition:border-color .15s,background .15s}
+.sp-card:hover,.sp-card:focus-visible{border-color:#9ea2ab;background:#fafafa}
+.sp-card.sel{border-color:var(--brand);background:var(--tint)}
+.sp-card b{font:500 15px/1.25 var(--sans);color:#16181d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-card small{font:400 12px/1.2 var(--sans);color:#4a4f5a}
+@media (max-width:759px){.sp-cards{row-gap:8px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.spanel,.spanel>*{animation:none!important}}
 </style>
 
@@ -1500,6 +1510,6 @@ document.querySelectorAll('[role=tablist]').forEach(function(tl){
 });
 </script>
 
-<script src="assets/js/search.js?v=ca6cebbe" defer></script>
+<script src="assets/js/search.js?v=d76eed29" defer></script>
 </body>
 </html>
