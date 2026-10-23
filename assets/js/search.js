@@ -318,7 +318,17 @@
     load().then(function () { shown = 12; showResults(true); });
   };
 
-  window.addEventListener('resize', function () { if (active) moveGlide(active, active); });
+  /* keep the pill glued to its segment while the bar re-lays out (button expanding, window resize) */
+  var settle = null;
+  function track() {
+    if (!active || !glide) return;
+    var el = form.querySelector('.seg[data-seg="' + active + '"]');
+    glide.classList.add('jump');
+    glide.style.width = el.offsetWidth + 'px'; glide.style.transform = 'translateX(' + el.offsetLeft + 'px)';
+    clearTimeout(settle); settle = setTimeout(function () { glide.classList.remove('jump'); }, 120);
+  }
+  if (window.ResizeObserver) { var ro = new ResizeObserver(track); form.querySelectorAll('.seg').forEach(function (el) { ro.observe(el); }); }
+  window.addEventListener('resize', track);
   syncFields();
   ['pointerenter', 'focusin'].forEach(function (ev) { form.addEventListener(ev, load, { once: true }); });
 })();
