@@ -24,7 +24,7 @@
   var LOGO = { 'D.Y. Patil University': '708eddc90e', 'Chandigarh University': '502341bb01', 'Kurukshetra University': '0d254a487f', 'O.P. Jindal Global University': 'f62dd3ebc9' };
   var img = function (k) { return '<img src="assets/img/' + k + '.webp" alt="" width="40" height="40">'; };
 
-  var data = null, loading = null, links = {}, uniu = {};
+  var data = null, loading = null, links = {}, uniu = {}, ulogo = {};
   var state = { degree: null, uni: null, spec: null, budget: 'any' };
   var active = null, from = null, shown = 12, sort = 'fee';
 
@@ -35,8 +35,8 @@
 
   function load() {
     if (data) return Promise.resolve(data);
-    if (!loading) loading = fetch('assets/data/programs.json?v=b414ee14').then(function (r) { return r.json(); }).then(function (j) {
-      links = j.links || {}; uniu = j.uniu || {};
+    if (!loading) loading = fetch('assets/data/programs.json?v=def7569f').then(function (r) { return r.json(); }).then(function (j) {
+      links = j.links || {}; uniu = j.uniu || {}; ulogo = j.logos || {};
       data = j.p.map(function (r) {
         return { d: r[0], u: j.unis[r[1]], s: r[2], f: r[3], n: r[4], y: r[5], url: SITE + r[6] };
       }).filter(function (p) { return DEG[p.d]; });
@@ -161,24 +161,26 @@
     if (!names.length) html += '<p class="sp-none">No specialisations match “' + esc(qSpec.value) + '”.</p>';
     panel.innerHTML = html;
   }
+  function uniBadge(u) {
+    return '<span class="sp-logo">' + (ulogo[u] ? '<img src="assets/img/ulogo/' + ulogo[u] + '.webp" alt="" width="28" height="28" loading="lazy">'
+      : '<b>' + esc(initials(u)) + '</b>') + '</span>';
+  }
   function renderUni() {
     var q = norm(qUni.value === state.uni ? '' : qUni.value), unis = {};
-    data.forEach(function (p) {
-      if (state.degree && p.d !== state.degree) return;
-      var u = unis[p.u] || (unis[p.u] = { n: 0, naac: p.n });
-      u.n++; if (!u.naac && p.n) u.naac = p.n;
-    });
+    data.forEach(function (p) { if (!state.degree || p.d === state.degree) unis[p.u] = (unis[p.u] || 0) + 1; });
     var names = Object.keys(unis).filter(function (u) { return !q || q.split(' ').every(function (w) { return norm(u).indexOf(w) > -1; }); })
-      .sort(function (a, b) { return unis[b].n - unis[a].n || a.localeCompare(b); });
-    var html = sheetHead('Choose a university') + '<p class="sp-k">' + (q ? 'Matching universities' : (state.degree ? 'Universities offering online ' + DEG[state.degree][0] : 'Popular universities')) + '</p><div class="sp-tiles" role="listbox">';
-    if (!q) html += '<button type="button" role="option" class="sp-tile' + (!state.uni ? ' sel' : '') + '" data-uni=""><span class="sp-logo"><svg class="ico"><use href="#i-uni"/></svg></span><span>Any university</span><small>' +
-      names.length + ' universities</small></button>';
-    names.slice(0, q ? 40 : 90).forEach(function (u) {
-      html += '<button type="button" role="option" class="sp-tile' + (state.uni === u ? ' sel' : '') + '" data-uni="' + esc(u) + '"><span class="sp-logo">' +
-        (LOGO[u] ? img(LOGO[u]) : '<b>' + esc(initials(u)) + '</b>') + '</span><span>' + esc(u) + '</span><small>' +
-        (unis[u].naac ? 'NAAC ' + unis[u].naac + ' · ' : '') + unis[u].n + ' programme' + (unis[u].n > 1 ? 's' : '') + '</small></button>';
+      .sort(function (a, b) { return a.replace(/^(the|university of)\s+/i, '').localeCompare(b.replace(/^(the|university of)\s+/i, '')); });
+    var html = sheetHead('Choose a university') + '<div class="sp-pills sp-any">' +
+      '<button type="button" role="option" class="sp-pill' + (!state.uni ? ' sel' : '') + '" data-uni="">' +
+      '<span class="sp-logo"><svg class="ico"><use href="#i-uni"/></svg></span><span>Select Any University</span></button></div>';
+    var letter = null;
+    names.forEach(function (u) {
+      var L = u.replace(/^(the|university of)\s+/i, '').charAt(0).toUpperCase();
+      if (L !== letter) { if (letter) html += '</div>'; letter = L; html += '<p class="sp-k sp-az">' + L + '</p><div class="sp-pills" role="listbox">'; }
+      html += '<button type="button" role="option" class="sp-pill' + (state.uni === u ? ' sel' : '') + '" data-uni="' + esc(u) + '" title="' +
+        esc(u) + ' · ' + unis[u] + ' programme' + (unis[u] > 1 ? 's' : '') + '">' + uniBadge(u) + '<span>' + esc(u) + '</span></button>';
     });
-    html += '</div>';
+    if (letter) html += '</div>';
     if (!names.length) html += '<p class="sp-none">No universities match “' + esc(qUni.value) + '”' + (state.degree ? ' for ' + DEG[state.degree][0] : '') + '.</p>';
     panel.innerHTML = html;
   }

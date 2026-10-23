@@ -950,6 +950,18 @@ html.navlock .mega{overscroll-behavior:contain}
   @keyframes spIn{from{opacity:0;transform:translateY(-8px) scale(.985)}to{opacity:1;transform:none}}
   @keyframes spSwap{from{opacity:0;transform:translateX(var(--dx,0))}to{opacity:1;transform:none}}
 }
+/* university panel: A–Z pills (Home Page — Search-3) */
+.sp-pills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.sp-any{margin-bottom:8px}
+.spanel .sp-az{margin:22px 0 10px;font:400 14px/1 var(--sans);color:#555}
+.sp-pill{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;min-width:0;height:48px;padding:0 14px 0 5px;border:1px solid #dcdde1;border-radius:999px;background:var(--white);cursor:pointer;transition:border-color .15s,background .15s}
+.sp-pill:hover,.sp-pill:focus-visible{border-color:#9ea2ab;background:#fafafa}
+.sp-pill.sel{border-color:var(--brand);background:var(--tint)}
+.sp-pill .sp-logo{flex:none;width:38px;height:38px}
+.sp-pill .sp-logo img{width:28px!important;height:28px!important;object-fit:contain}
+.sp-pill>span:last-child{font:500 14.5px/1.2 var(--sans);color:#16181d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:1100px) and (min-width:760px){.sp-pills{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:759px){.sp-pills{grid-template-columns:1fr;gap:8px}.sp-pill{height:46px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.spanel,.spanel>*{animation:none!important}}
 </style>
 
@@ -1479,6 +1491,6 @@ document.querySelectorAll('[role=tablist]').forEach(function(tl){
 });
 </script>
 
-<script src="assets/js/search.js?v=2be01fc6" defer></script>
+<script src="assets/js/search.js?v=38d8a4d9" defer></script>
 </body>
 </html>
