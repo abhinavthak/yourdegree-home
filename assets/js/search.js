@@ -4,12 +4,12 @@
   if (!form) return;
 
   var DEG = {
-    mba: ['MBA', 'Master of Business Administration', 'pg'], mca: ['MCA', 'Master of Computer Applications', 'pg'],
-    ma: ['MA', 'Master of Arts', 'pg'], mcom: ['M.Com', 'Master of Commerce', 'pg'], msc: ['M.Sc', 'Master of Science', 'pg'],
-    msw: ['MSW', 'Master of Social Work', 'pg'], mlis: ['MLIS', 'Master of Library & Information Science', 'pg'],
-    pgdca: ['PGDCA', 'PG Diploma in Computer Applications', 'pg'],
-    bba: ['BBA', 'Bachelor of Business Administration', 'ug'], bca: ['BCA', 'Bachelor of Computer Applications', 'ug'],
-    bcom: ['B.Com', 'Bachelor of Commerce', 'ug'], ba: ['BA', 'Bachelor of Arts', 'ug'], bsc: ['B.Sc', 'Bachelor of Science', 'ug']
+    mba: ['MBA', 'Master of Business Administration', 'pg'], ma: ['MA', 'Master of Arts', 'pg'],
+    mca: ['MCA', 'Master of Computer Applications', 'pg'], mcom: ['M.Com', 'Master of Commerce', 'pg'], msc: ['M.Sc', 'Master of Science', 'pg'],
+    mlis: ['MLIS', 'Master of Library and Information Science', 'pg'], msw: ['MSW', 'Master of Social Work', 'pg'],
+    pgdca: ['PGDCA', 'Post Graduate Diploma in Computer Applications', 'pg'],
+    bba: ['BBA', 'Bachelor of Business Administration', 'ug'], ba: ['BA', 'Bachelor of Arts', 'ug'],
+    bca: ['BCA', 'Bachelor of Computer Applications', 'ug'], bcom: ['B.Com', 'Bachelor of Commerce', 'ug'], bsc: ['B.Sc', 'Bachelor of Science', 'ug']
   };
   var BUDGETS = [
     { id: 'any', label: 'Any budget', min: 0, max: Infinity },
@@ -19,6 +19,10 @@
     { id: '3p', label: 'Above ₹3 lakh', min: 300000, max: Infinity }
   ];
   var SITE = 'https://www.yourdegree.com/';
+  var ICON = { mba: 'cacace75bc', bba: 'cacace75bc', mca: '451892a184', bca: '451892a184', pgdca: '451892a184',
+    mcom: 'ed69ff81f5', bcom: 'ed69ff81f5', msc: 'ed69ff81f5', bsc: 'ed69ff81f5', ma: '73a8703195', ba: '73a8703195', msw: '73a8703195', mlis: '73a8703195' };
+  var LOGO = { 'D.Y. Patil University': '708eddc90e', 'Chandigarh University': '502341bb01', 'Kurukshetra University': '0d254a487f', 'O.P. Jindal Global University': 'f62dd3ebc9' };
+  var img = function (k) { return '<img src="assets/img/' + k + '.webp" alt="" width="40" height="40">'; };
 
   var data = null, loading = null;
   var state = { degree: null, uni: null, spec: null, budget: 'any' };
@@ -99,8 +103,8 @@
           if (DEG[k][2] !== lvl) return;
           var n = count({ degree: k, uni: state.uni, spec: null, budget: 'any' });
           if (!n) return;
-          html += '<button type="button" class="sp-tile' + (state.degree === k ? ' sel' : '') + '" data-deg="' + k + '"><b>' + DEG[k][0] +
-            '</b><span>' + DEG[k][1] + '</span><i>' + n + ' programmes</i></button>';
+          html += '<button type="button" class="sp-tile' + (state.degree === k ? ' sel' : '') + '" data-deg="' + k + '" title="' + n + ' programmes">' + img(ICON[k]) +
+            '<span>' + DEG[k][1] + ' (' + DEG[k][0] + ')</span></button>';
         });
         html += '</div>';
       });
@@ -132,15 +136,16 @@
     data.forEach(function (p) { if ((!state.degree || p.d === state.degree) && (!state.uni || p.u === state.uni)) counts[p.s] = (counts[p.s] || 0) + 1; });
     var names = Object.keys(counts).filter(function (s) { return !q || norm(s).indexOf(q) > -1; })
       .sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b); });
-    var html = sheetHead('Choose a specialisation') + '<p class="sp-k">' + (state.degree ? 'Specialisations in ' + DEG[state.degree][0] + (state.uni ? ' at ' + esc(state.uni) : '') : 'Popular specialisations') + '</p><ul class="sp-list sp-scroll" role="listbox">';
-    if (!q) html += '<li><button type="button" role="option" data-spec=""' + (!state.spec ? ' class="sel"' : '') + '><span><b>Any specialisation</b><small>' +
-      count({ degree: state.degree, uni: state.uni, spec: null, budget: 'any' }) + ' programmes</small></span></button></li>';
-    names.slice(0, q ? 40 : 60).forEach(function (s) {
-      html += '<li><button type="button" role="option" data-spec="' + esc(s) + '"' + (state.spec === s ? ' class="sel"' : '') + '><span><b>' + esc(s) +
-        '</b><small>' + counts[s] + ' programme' + (counts[s] > 1 ? 's' : '') + '</small></span></button></li>';
+    var html = sheetHead('Choose a specialisation') + '<p class="sp-k">' + (state.degree ? 'Specialisations in ' + DEG[state.degree][0] + (state.uni ? ' at ' + esc(state.uni) : '') : 'Popular specialisations') + '</p><div class="sp-tiles sp-tx" role="listbox">';
+    if (!q) html += '<button type="button" role="option" class="sp-tile' + (!state.spec ? ' sel' : '') + '" data-spec=""><span>Any specialisation</span><small>' +
+      count({ degree: state.degree, uni: state.uni, spec: null, budget: 'any' }) + ' programmes</small></button>';
+    names.slice(0, q ? 40 : 80).forEach(function (s) {
+      html += '<button type="button" role="option" class="sp-tile' + (state.spec === s ? ' sel' : '') + '" data-spec="' + esc(s) + '"><span>' + esc(s) +
+        '</span><small>' + counts[s] + ' programme' + (counts[s] > 1 ? 's' : '') + '</small></button>';
     });
-    if (!names.length) html += '<li class="sp-none">No specialisations match “' + esc(qSpec.value) + '”.</li>';
-    panel.innerHTML = html + '</ul>';
+    html += '</div>';
+    if (!names.length) html += '<p class="sp-none">No specialisations match “' + esc(qSpec.value) + '”.</p>';
+    panel.innerHTML = html;
   }
   function renderUni() {
     var q = norm(qUni.value === state.uni ? '' : qUni.value), unis = {};
@@ -151,15 +156,17 @@
     });
     var names = Object.keys(unis).filter(function (u) { return !q || q.split(' ').every(function (w) { return norm(u).indexOf(w) > -1; }); })
       .sort(function (a, b) { return unis[b].n - unis[a].n || a.localeCompare(b); });
-    var html = sheetHead('Choose a university') + '<p class="sp-k">' + (q ? 'Matching universities' : (state.degree ? 'Universities offering online ' + DEG[state.degree][0] : 'Popular universities')) + '</p><ul class="sp-list sp-scroll" role="listbox">';
-    if (!q) html += '<li><button type="button" role="option" data-uni=""' + (!state.uni ? ' class="sel"' : '') + '><span class="sp-ic"><svg class="ico"><use href="#i-uni"/></svg></span><span><b>Any university</b><small>' +
-      names.length + ' universities</small></span></button></li>';
-    names.slice(0, q ? 40 : 60).forEach(function (u) {
-      html += '<li><button type="button" role="option" data-uni="' + esc(u) + '"' + (state.uni === u ? ' class="sel"' : '') + '><span class="sp-ic sp-ini">' + esc(initials(u)) + '</span><span><b>' + esc(u) +
-        '</b><small>' + (unis[u].naac ? 'NAAC ' + unis[u].naac + ' · ' : '') + unis[u].n + ' programme' + (unis[u].n > 1 ? 's' : '') + '</small></span></button></li>';
+    var html = sheetHead('Choose a university') + '<p class="sp-k">' + (q ? 'Matching universities' : (state.degree ? 'Universities offering online ' + DEG[state.degree][0] : 'Popular universities')) + '</p><div class="sp-tiles" role="listbox">';
+    if (!q) html += '<button type="button" role="option" class="sp-tile' + (!state.uni ? ' sel' : '') + '" data-uni=""><span class="sp-logo"><svg class="ico"><use href="#i-uni"/></svg></span><span>Any university</span><small>' +
+      names.length + ' universities</small></button>';
+    names.slice(0, q ? 40 : 90).forEach(function (u) {
+      html += '<button type="button" role="option" class="sp-tile' + (state.uni === u ? ' sel' : '') + '" data-uni="' + esc(u) + '"><span class="sp-logo">' +
+        (LOGO[u] ? img(LOGO[u]) : '<b>' + esc(initials(u)) + '</b>') + '</span><span>' + esc(u) + '</span><small>' +
+        (unis[u].naac ? 'NAAC ' + unis[u].naac + ' · ' : '') + unis[u].n + ' programme' + (unis[u].n > 1 ? 's' : '') + '</small></button>';
     });
-    if (!names.length) html += '<li class="sp-none">No universities match “' + esc(qUni.value) + '”' + (state.degree ? ' for ' + DEG[state.degree][0] : '') + '.</li>';
-    panel.innerHTML = html + '</ul>';
+    html += '</div>';
+    if (!names.length) html += '<p class="sp-none">No universities match “' + esc(qUni.value) + '”' + (state.degree ? ' for ' + DEG[state.degree][0] : '') + '.</p>';
+    panel.innerHTML = html;
   }
 
   panel.addEventListener('mousedown', function (e) { if (e.target.closest('button')) e.preventDefault(); });
