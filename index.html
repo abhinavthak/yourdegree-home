@@ -1070,6 +1070,15 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--whit
 @media (max-width:759px){
   .hb-dots{right:16px;bottom:16px}
 }
+@media (max-width:759px){
+  .split:has(> .disha){gap:18px;justify-items:center;text-align:center}
+  .split:has(> .disha) .txt{display:contents}
+  .split:has(> .disha) .txt>.hd{order:1}
+  .split:has(> .disha) .txt>p:not(.pref){order:2}
+  .split:has(> .disha) .disha{order:3;margin-block:6px}
+  .split:has(> .disha) .txt>.cta{order:4}
+  .split:has(> .disha) .pref{order:5;margin-top:0}
+}
 @keyframes hvstrip{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.hv-ban img{transition:none;transform:none}.hv-strip ul{animation:none}.hv-strip .wrap{overflow-x:auto}*{transition:none!important}.spanel,.spanel>*{animation:none!important}}
 </style>
