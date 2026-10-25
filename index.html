@@ -1029,12 +1029,14 @@ html[data-hero="e"] .hero h1 em{color:var(--white)}
 .hv-strip li{display:flex;align-items:center;gap:10px;font:400 15px/1.3 var(--sans);color:#2d3340;white-space:nowrap}
 .hv-strip b{font-weight:700;color:#16181d}
 .hv-strip img{width:30px;height:30px}
+.hv-strip i{font-style:normal}
 @media (max-width:759px){
   html[data-hero="e"] .heroin{padding-block:56px 52px}
   html[data-hero="e"] .hero h1{font-size:26px}
-  .hv-strip ul{display:grid;grid-template-columns:1fr 1fr;gap:14px 12px;padding:16px 0}
-  .hv-strip li{font-size:13px;gap:8px;white-space:normal}
-  .hv-strip img{width:26px;height:26px;flex:none}
+  .hv-strip ul{display:grid;grid-template-columns:auto auto;justify-content:space-between;gap:14px 8px;padding:16px 0}
+  .hv-strip li{font-size:clamp(11px,3.2vw,13px);gap:6px;white-space:nowrap;min-width:0}
+  .hv-strip .dk{display:none}
+  .hv-strip img{width:24px;height:24px;flex:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.spanel,.spanel>*{animation:none!important}}
 </style>
@@ -1162,7 +1164,7 @@ html[data-hero="e"] .hero h1 em{color:var(--white)}
     <div class="sres-more"><button type="button" class="cta ghost" id="sresMore" hidden>Show more programmes</button></div>
   </div>
 </section>
-<section class="hv-strip"><div class="wrap"><ul><li><img src="assets/img/nav_explore.webp" alt="" width="32" height="32" loading="lazy" decoding="async"><span><b>UGC-entitled</b> programs only</span></li><li><img src="assets/img/nav_uni.webp" alt="" width="32" height="32" loading="lazy" decoding="async"><span><b>NAAC A+</b> &amp; above universities</span></li><li><img src="assets/img/070312b403.webp" alt="" width="32" height="32" loading="lazy" decoding="async"><span><b>1 Lakh+</b> students counselled</span></li><li><img src="assets/img/2304e6f944.webp" alt="" width="32" height="32" loading="lazy" decoding="async"><span><b>Verified &amp; secure</b> admissions</span></li></ul></div></section>
+<section class="hv-strip"><div class="wrap"><ul><li><img src="assets/img/nav_explore.webp" alt="" width="32" height="32" loading="lazy" decoding="async"><span><b>UGC-entitled</b> programs<i class="dk"> only</i></span></li><li><img src="assets/img/nav_uni.webp" alt="" width="32" height="32" loading="lazy" decoding="async"><span><b>NAAC A+</b><i class="dk"> &amp; above</i> universities</span></li><li><img src="assets/img/070312b403.webp" alt="" width="32" height="32" loading="lazy" decoding="async"><span><b>1 Lakh+</b><i class="dk"> students</i> counselled</span></li><li><img src="assets/img/2304e6f944.webp" alt="" width="32" height="32" loading="lazy" decoding="async"><span><b>Verified<i class="dk"> &amp; secure</i></b> admissions</span></li></ul></div></section>
 <section class="bannerS" data-hv="o">
   <div class="wrap">
     <picture><source media="(max-width:759px)" srcset="assets/img/banner_red_m.webp" width="1000" height="610"><img class="banner" src="assets/img/banner_red.webp" alt="Only UGC-accredited online courses. Recognised degrees. Real opportunities." width="2600" height="478" fetchpriority="high" decoding="async"></picture>
