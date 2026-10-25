@@ -44,6 +44,7 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 .sec{padding-block:var(--sec)}
 .band{background:var(--band)}
 .hd{font-family:var(--head);font-weight:700;letter-spacing:-.035em;color:var(--ink);text-wrap:balance;font-size:clamp(28px,3.3vw,46px);line-height:1.15}
+@media (min-width:760px){.press .hd{white-space:nowrap;font-size:min(46px,3.3vw,calc((100vw - 120px)/23))}}
 .center{text-align:center}
 .sub{font:500 16px/1.5 var(--sans);color:var(--muted);text-wrap:balance}
 .ico{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
@@ -102,6 +103,7 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 .cluster .s2{width:104px;height:104px;filter:saturate(.85) brightness(.94);position:relative;z-index:1}
 .cluster .s1{width:132px;height:132px;margin-inline:-22px;filter:saturate(.9) brightness(.97);position:relative;z-index:2}
 .cluster .main{width:180px;height:180px;border-width:5px;position:relative;z-index:3;box-shadow:0 10px 30px rgba(26,32,44,.18)}
+@media (min-width:521px) and (max-width:1300px){.cluster .s2{width:88px;height:88px}.cluster .s1{width:116px;height:116px}.cluster .main{width:160px;height:160px}}
 @media (max-width:520px){.cluster .s2{width:60px;height:60px;border-width:3px}.cluster .s1{width:84px;height:84px;border-width:3px}.pbtn:has(.s1){margin-inline:-14px}.cluster .main{width:124px;height:124px;border-width:4px}}
 @media (max-width:400px){.cluster .s2{width:52px;height:52px}.cluster .s1{width:76px;height:76px}.cluster .main{width:112px;height:112px}}
 .mname{display:flex;align-items:center;gap:28px;font:700 22px/1 var(--head);letter-spacing:-.03em}
@@ -1245,7 +1247,7 @@ html.navlock .mega{overscroll-behavior:contain}
 
 <section class="sec band press">
   <div class="wrap">
-    <h2 class="hd center">Something to watch while <br>we find your perfect fit.</h2>
+    <h2 class="hd center">Something to watch while we find your perfect fit.</h2>
     <div class="vgrid">
       <article class="vmain" id="vmain">
         <button class="vthumb" data-yt="W0h0yb8B05U" aria-label="Play: How to Become a Machine Learning Engineer in 2026 (Complete Roadmap)"><img src="https://i.ytimg.com/vi/W0h0yb8B05U/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async"><span class="tpbtn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span></button>
