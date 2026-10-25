@@ -96,6 +96,7 @@
     form.querySelectorAll('.segclr').forEach(function (c) { c.hidden = !state[c.dataset.clear]; });
     var sum = [state.degree && 'Online ' + DEG[state.degree][0], state.uni, state.spec].filter(Boolean).join(' · ');
     msLabel.textContent = sum || 'Search degrees';
+    var sb = form.querySelector('.sbtn'); sb.disabled = !sum; sb.title = sum ? '' : 'Select a degree, university or specialisation';
   }
   function next(after) {
     active = null; syncFields();
@@ -266,7 +267,7 @@
     if (!state.degree && tyDeg) Object.keys(DEG).forEach(function (k) { if (norm(DEG[k][0]) === tyDeg || k === tyDeg) state.degree = k; });
     setActive(null); qDeg.blur(); qUni.blur(); qSpec.blur();
     if (form.classList.contains('full')) { form.classList.remove('full'); document.body.classList.remove('slock'); msOpen.setAttribute('aria-expanded', 'false'); }
-    if (!state.degree && !state.uni && !state.spec) { setActive('degree'); qDeg.focus(); return; }
+    if (!state.degree && !state.uni && !state.spec) return;
     load().then(function () { location.href = pageFor(); });
   });
   /* the most specific yourdegree.com page for the current selection */
