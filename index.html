@@ -1082,8 +1082,7 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--whit
 }
 /* E/F: smaller headline up top, compact search lower down, video visible between */
 @media (min-width:760px){
-  html[data-hero="e"] .heroin,html[data-hero="f"] .heroin{padding-block:52px 44px;gap:16px}
-  html[data-hero="e"] .hero h1,html[data-hero="f"] .hero h1{margin-bottom:calc(clamp(120px,15vw,210px) - 16px)}
+  html[data-hero="e"] .heroin,html[data-hero="f"] .heroin{padding-block:52px 44px;gap:clamp(120px,15vw,210px)}
   html[data-hero="e"] .hero h1,html[data-hero="f"] .hero h1{font-size:clamp(24px,2.3vw,34px);line-height:1.22}
   html[data-hero="e"] .search,html[data-hero="f"] .search{max-width:740px;padding:4px 8px 4px 4px}
   html[data-hero="e"] .segin,html[data-hero="f"] .segin{padding:10px 14px 10px 22px;gap:2px}
@@ -1093,31 +1092,10 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--whit
   html[data-hero="e"] .search:not(.on) .sbtn,html[data-hero="f"] .search:not(.on) .sbtn{width:42px}
 }
 @media (max-width:759px){
-  html[data-hero="e"] .heroin,html[data-hero="f"] .heroin{padding-block:34px 28px;gap:14px}
-  html[data-hero="e"] .hero h1,html[data-hero="f"] .hero h1{margin-bottom:104px}
+  html[data-hero="e"] .heroin,html[data-hero="f"] .heroin{padding-block:34px 28px;gap:118px}
   html[data-hero="e"] .hero h1,html[data-hero="f"] .hero h1{font-size:21px;text-wrap:balance}
   html[data-hero="e"] .hero h1 br,html[data-hero="f"] .hero h1 br{display:none}
   html[data-hero="e"] .msearch,html[data-hero="f"] .msearch{height:50px;font-size:15px}
-}
-/* quick filters under the search */
-.qf{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;align-content:center;gap:8px;max-width:min(100%,1000px);margin-top:-22px;align-self:start}
-.qf-k{font:500 13px/1 var(--sans);color:var(--muted);margin-right:2px}
-.qf-c{height:32px;padding:0 14px;border-radius:999px;border:1px solid #e1e3e8;background:var(--white);font:500 13px/1 var(--sans);color:#2d3340;cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .15s}
-.qf-c:hover{border-color:#b9bdc6;transform:translateY(-1px)}
-.qf-c[aria-pressed="true"]{background:var(--brand-cta);border-color:var(--brand-cta);color:var(--white)}
-.qf-c:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
-.qf-c:nth-child(n+9){display:none}
-html[data-hero="e"] .qf,html[data-hero="f"] .qf{margin-top:0}
-html[data-hero="e"] .qf-k,html[data-hero="f"] .qf-k{color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(0,0,0,.35)}
-html[data-hero="e"] .qf-c,html[data-hero="f"] .qf-c{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.4);color:var(--white);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-html[data-hero="e"] .qf-c:hover,html[data-hero="f"] .qf-c:hover{background:rgba(255,255,255,.28);border-color:rgba(255,255,255,.7)}
-html[data-hero="e"] .qf-c[aria-pressed="true"],html[data-hero="f"] .qf-c[aria-pressed="true"]{background:var(--white);border-color:var(--white);color:var(--brand)}
-@media (max-width:759px){
-  .qf{margin-top:-8px;gap:6px}
-  html[data-hero="e"] .qf,html[data-hero="f"] .qf{margin-top:0}
-  .qf-k{display:none}
-  .qf-c{height:30px;padding:0 12px;font-size:12.5px}
-  .qf-c:nth-child(n+8){display:none}
 }
 @keyframes hvstrip{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.hv-ban img{transition:none;transform:none}.hv-strip ul{animation:none}.hv-strip .wrap{overflow-x:auto}*{transition:none!important}.spanel,.spanel>*{animation:none!important}}
@@ -1208,7 +1186,6 @@ html[data-hero="e"] .qf-c[aria-pressed="true"],html[data-hero="f"] .qf-c[aria-pr
         <span class="sglide" aria-hidden="true"></span>
         <div class="spanel" id="spanel" hidden></div>
       </form>
-      <div class="qf" role="group" aria-label="Popular searches"><span class="qf-k">Popular:</span><button type="button" class="qf-c" data-deg="mba" data-spec="" aria-pressed="false">Online MBA</button><button type="button" class="qf-c" data-deg="mba" data-spec="Finance" aria-pressed="false">MBA in Finance</button><button type="button" class="qf-c" data-deg="mba" data-spec="Business Analytics" aria-pressed="false">MBA in Business Analytics</button><button type="button" class="qf-c" data-deg="mba" data-spec="Human Resource Management" aria-pressed="false">MBA in HR</button><button type="button" class="qf-c" data-deg="mca" data-spec="" aria-pressed="false">Online MCA</button><button type="button" class="qf-c" data-deg="mca" data-spec="Data Science" aria-pressed="false">MCA in Data Science</button><button type="button" class="qf-c" data-deg="bba" data-spec="" aria-pressed="false">Online BBA</button><button type="button" class="qf-c" data-deg="bca" data-spec="" aria-pressed="false">Online BCA</button></div>
     </div>
   </div>
 </header>
@@ -1666,22 +1643,12 @@ document.querySelectorAll('[role=tablist]').forEach(function(tl){
 });
 </script>
 
-<script src="assets/js/search.js?v=6f0b26a4" defer></script>
+<script src="assets/js/search.js?v=93c2eac4" defer></script>
 <script>
 (function(){
   var tabs=[].slice.call(document.querySelectorAll('.utabs [role=tab]'));
   function sel(t){tabs.forEach(function(b){var on=b===t;b.classList.toggle('on',on);b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;document.getElementById(b.getAttribute('aria-controls')).hidden=!on;});}
   tabs.forEach(function(b,i){b.addEventListener('click',function(){sel(b);});b.addEventListener('keydown',function(e){var k=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(k){var n=tabs[(i+k+tabs.length)%tabs.length];sel(n);n.focus();}});});
-})();
-</script>
-<script>
-(function(){
-  var cs=[].slice.call(document.querySelectorAll('.qf-c'));
-  cs.forEach(function(c){c.addEventListener('click',function(){
-    if(!window.ydPick)return;
-    if(c.getAttribute('aria-pressed')==='true')ydPick(null,null);else ydPick(c.dataset.deg,c.dataset.spec);
-  });});
-  document.addEventListener('ydchange',function(e){var d=e.detail;cs.forEach(function(c){c.setAttribute('aria-pressed',String(!d.uni&&d.degree===c.dataset.deg&&(d.spec||'')===c.dataset.spec));});});
 })();
 </script>
 </body>
