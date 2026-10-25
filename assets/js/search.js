@@ -96,6 +96,7 @@
     form.querySelectorAll('.segclr').forEach(function (c) { c.hidden = !state[c.dataset.clear]; });
     var sum = [state.degree && 'Online ' + DEG[state.degree][0], state.uni, state.spec].filter(Boolean).join(' · ');
     msLabel.textContent = sum || 'Search degrees';
+    document.dispatchEvent(new CustomEvent('ydchange', { detail: { degree: state.degree, uni: state.uni, spec: state.spec } }));
     var sb = form.querySelector('.sbtn'); sb.disabled = !sum; sb.title = sum ? '' : 'Select a degree, university or specialisation';
   }
   function next(after) {
@@ -328,6 +329,12 @@
   window.ydSearch = function (deg) {
     state = { degree: deg, uni: null, spec: null, budget: 'any' }; syncFields();
     load().then(function () { shown = 12; showResults(true); });
+  };
+
+  /* quick filters: preset a degree / specialisation (or clear it again) */
+  window.ydPick = function (deg, spec) {
+    setActive(null);
+    state = { degree: deg || null, uni: null, spec: spec || null, budget: 'any' }; syncFields();
   };
 
   /* keep the pill glued to its segment while the bar re-lays out (button expanding, window resize) */
