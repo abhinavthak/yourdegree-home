@@ -31,6 +31,7 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var panel = $('#spanel'), qDeg = $('#qDeg'), qUni = $('#qUni'), qSpec = $('#qSpec'), fBudget = $('#sresBudget');
   var msOpen = $('#msOpen'), msLabel = $('#msLabel');
+  var ROTATE = msLabel.innerHTML;
   var res = $('#sres'), mq = window.matchMedia('(max-width:759px)');
 
   function load() {
@@ -102,7 +103,7 @@
     fBudget.value = state.budget;
     form.querySelectorAll('.segclr').forEach(function (c) { c.hidden = !state[c.dataset.clear]; });
     var sum = [state.degree && 'Online ' + DEG[state.degree][0], state.uni, state.spec].filter(Boolean).join(' · ');
-    msLabel.textContent = sum || 'Search degrees';
+    if (sum) msLabel.textContent = sum; else msLabel.innerHTML = ROTATE;
     var sb = form.querySelector('.sbtn'); sb.disabled = !sum; sb.title = sum ? '' : 'Select a degree, university or specialisation';
   }
   function next(after) {

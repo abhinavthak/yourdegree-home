@@ -1100,7 +1100,14 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--whit
   html[data-hero="e"] .hero h1 br,html[data-hero="f"] .hero h1 br{display:none}
   html[data-hero="e"] .msearch,html[data-hero="f"] .msearch{height:50px;font-size:15px}
 }
+/* phone search pill: rotating word */
+#msLabel:has(.rw){display:inline-flex;align-items:center;gap:.3em}
+.msearch .rw{display:inline-block;height:1.5em;overflow:hidden;vertical-align:bottom}
+.msearch .rw>span{display:block;animation:rw 7.5s cubic-bezier(.65,0,.35,1) infinite}
+.msearch .rw i{display:block;height:1.5em;line-height:1.5em;font-style:normal}
+@keyframes rw{0%,27%{transform:translateY(0)}33%,60%{transform:translateY(-1.5em)}66%,94%{transform:translateY(-3em)}100%{transform:translateY(-4.5em)}}
 @keyframes hvstrip{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.msearch .rw>span{animation:none}}
 @media (prefers-reduced-motion:reduce){.hv-ban img{transition:none;transform:none}.hv-strip ul{animation:none}.hv-strip .wrap{overflow-x:auto}*{transition:none!important}.spanel,.spanel>*{animation:none!important}}
 </style>
 
@@ -1170,7 +1177,7 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--whit
       <div class="hv-ban" data-hv="f" hidden><figure class="hb-s on"><img alt="" data-src="assets/img/hero_ban_campus.webp" style="object-position:50% 60%" decoding="async"></figure><figure class="hb-s"><img alt="" data-src="assets/img/hero_ban_study.webp" style="object-position:50% 30%" decoding="async"></figure><figure class="hb-s"><img alt="" data-src="assets/img/hero_ban_grad.webp" style="object-position:50% 35%" decoding="async"></figure><div class="hb-dots"><button type="button" aria-label="Show banner 1" aria-current="true"></button><button type="button" aria-label="Show banner 2"></button><button type="button" aria-label="Show banner 3"></button></div></div>
       <div class="hv-vid" data-hv="e" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/img/hero_campus.webp" data-src="assets/video/hero_campus.mp4"></video></div>
       <h1 class="hd" id="heroH">Find and compare online degrees <br>from 87 universities, in one place</h1>
-      <button type="button" class="msearch" id="msOpen" aria-haspopup="dialog" aria-controls="ydSearch"><svg class="ico"><use href="#i-search"/></svg><span id="msLabel">Search degrees</span></button>
+      <button type="button" class="msearch" id="msOpen" aria-haspopup="dialog" aria-controls="ydSearch"><svg class="ico"><use href="#i-search"/></svg><span id="msLabel">Search <span class="rw" aria-hidden="true"><span><i>degrees</i><i>universities</i><i>specialisations</i><i>degrees</i></span></span><span class="sr">degrees, universities or specialisations</span></span></button>
       <form class="search" id="ydSearch" role="search" autocomplete="off">
         <div class="mhead"><b>Find your degree</b><button type="button" class="sp-x" id="msClose" aria-label="Close search"><svg class="ico"><use href="#i-close"/></svg></button></div>
         <div class="seg" data-seg="degree">
@@ -1646,7 +1653,7 @@ document.querySelectorAll('[role=tablist]').forEach(function(tl){
 });
 </script>
 
-<script src="assets/js/search.js?v=afed1386" defer></script>
+<script src="assets/js/search.js?v=b38806d1" defer></script>
 <script>
 (function(){
   var tabs=[].slice.call(document.querySelectorAll('.utabs [role=tab]'));
