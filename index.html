@@ -1245,14 +1245,28 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--whit
 <section class="sec band">
   <div class="wrap">
     <h2 class="hd center">Tools, guidance and support, <br>all in one place.</h2>
-    <div class="utabs" role="tablist"><button class="on" role="tab" aria-selected="true">Pre-admission Tools</button><button role="tab" aria-selected="false">Post-admission Tools</button></div>
-    <div class="tgrid">
+    <div class="utabs" role="tablist" aria-label="Tools"><button class="on" role="tab" id="tt-pre" aria-selected="true" aria-controls="tp-pre">Pre-admission Tools</button><button role="tab" id="tt-post" aria-selected="false" aria-controls="tp-post" tabindex="-1">Post-admission Tools</button></div>
+    <div class="tgrid" role="tabpanel" id="tp-pre" aria-labelledby="tt-pre">
       <a class="tcard" href="#"><img class="t3d" src="assets/img/bd256542ce.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Compare Universities</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
       <a class="tcard" href="#"><img class="t3d" src="assets/img/ed69ff81f5.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Fee &amp; EMI Calculator</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
       <a class="tcard" href="#"><img class="t3d" src="assets/img/2304e6f944.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Eligibility Checker</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
-      <a class="tcard" href="#"><img class="t3d" src="assets/img/b1f33e23ca.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Document Checklist</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
       <a class="tcard" href="#"><img class="t3d" src="assets/img/070312b403.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Scholarship Finder</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
       <a class="tcard" href="#"><img class="t3d" src="assets/img/b1f33e23ca.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Free Counselling Call</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/b1f33e23ca.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Document Checklist</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="tgrid" role="tabpanel" id="tp-post" aria-labelledby="tt-post" hidden>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/cacace75bc.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Job Portal</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/73a8703195.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>English Speaking Practice</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/b1f33e23ca.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>CV Assured</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/73a8703195.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Online Education Resources</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/451892a184.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>24x7 Assistance</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/451892a184.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>LinkedIn Optimisation</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/cacace75bc.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Internship Portal</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/b1f33e23ca.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Create Resume</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/070312b403.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Refer &amp; Earn</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/nav_uni.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Networking Opportunities</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/73a8703195.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Sample Papers &amp; Notes</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
+      <a class="tcard" href="#"><img class="t3d" src="assets/img/nav_uni.webp" alt="" width="64" height="64" loading="lazy" decoding="async"><p>Alumni Network</p><svg class="ico go"><use href="#i-arrow"/></svg></a>
     </div>
   </div>
 </section>
@@ -1599,5 +1613,12 @@ document.querySelectorAll('[role=tablist]').forEach(function(tl){
 </script>
 
 <script src="assets/js/search.js?v=7712ec45" defer></script>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.utabs [role=tab]'));
+  function sel(t){tabs.forEach(function(b){var on=b===t;b.classList.toggle('on',on);b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;document.getElementById(b.getAttribute('aria-controls')).hidden=!on;});}
+  tabs.forEach(function(b,i){b.addEventListener('click',function(){sel(b);});b.addEventListener('keydown',function(e){var k=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(k){var n=tabs[(i+k+tabs.length)%tabs.length];sel(n);n.focus();}});});
+})();
+</script>
 </body>
 </html>
