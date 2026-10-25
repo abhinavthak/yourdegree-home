@@ -1130,7 +1130,7 @@ html[data-hero="e"] .hero h1 em{color:var(--white)}
 </header>
 <script>
 (function(){
-  var H1={"o": "Find the right <em>online degree</em> <br class=\"mbr\">for your career goals", "e": "Online degrees from <br class=\"mbr\">87 UGC-entitled universities"},NM={"o": "Current hero", "e": "OYO-style video hero"},K='ydHero',de=document.documentElement;
+  var H1={"o": "Find the right <em>online degree</em> <br class=\"mbr\">for your career goals", "e": "Find and compare online degrees <br>from 87 universities, in one place"},NM={"o": "Current hero", "e": "OYO-style video hero"},K='ydHero',de=document.documentElement;
   function apply(v){if(!H1[v])v='e';de.setAttribute('data-hero',v);document.getElementById('heroH').innerHTML=H1[v];
     document.querySelectorAll('[data-hv]').forEach(function(e){e.hidden=e.getAttribute('data-hv').split(' ').indexOf(v)<0;});
     document.querySelectorAll('.hvopts button').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-hero')===v);});
