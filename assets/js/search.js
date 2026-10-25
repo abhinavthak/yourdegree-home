@@ -89,6 +89,13 @@
     load().then(function () { render(); panel.hidden = false; fitPanel(); if (mq.matches) document.body.classList.add('slock'); });
   }
   function syncFields() {
+    /* specialisation needs a degree and a university first */
+    var canSpec = !!(state.degree && state.uni);
+    if (!canSpec) state.spec = null;
+    var segSpec = qSpec.closest('.seg');
+    segSpec.classList.toggle('off', !canSpec); qSpec.disabled = !canSpec;
+    qSpec.placeholder = canSpec ? 'Choose a specialisation' : 'Pick a degree & university first';
+    if (!canSpec && active === 'spec') setActive(null);
     if (active !== 'degree') qDeg.value = state.degree ? DEG[state.degree][0] : '';
     if (active !== 'uni') qUni.value = state.uni || '';
     if (active !== 'spec') qSpec.value = state.spec || '';
@@ -100,8 +107,9 @@
   }
   function next(after) {
     active = null; syncFields();
-    if (after === 'degree') { setActive('uni'); qUni.focus(); }
-    else if (after === 'uni') { setActive('spec'); qSpec.focus(); }
+    if (after === 'degree' && !state.uni) { setActive('uni'); qUni.focus(); }
+    else if ((after === 'degree' || after === 'uni') && state.degree && state.uni) { setActive('spec'); qSpec.focus(); }
+    else if (after === 'uni' && !state.degree) { setActive('degree'); qDeg.focus(); }
     else { setActive(null); form.querySelector('.sbtn').focus({ preventScroll: form.classList.contains('full') }); }
   }
 
@@ -205,7 +213,7 @@
     if (btn.dataset.deg !== undefined) {
       var changed = state.degree !== btn.dataset.deg;
       state.degree = btn.dataset.deg;
-      if (btn.dataset.spec !== undefined) { state.spec = btn.dataset.spec; next('spec'); return; }
+      if (btn.dataset.spec !== undefined && state.uni) { state.spec = btn.dataset.spec; next('spec'); return; }
       if (changed) { state.spec = null; if (state.uni && !count({ degree: state.degree, uni: state.uni, spec: null, budget: 'any' })) state.uni = null; }
       qDeg.blur(); next('degree'); return;
     }

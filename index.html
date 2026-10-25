@@ -81,6 +81,9 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 
 
 .sbtn:hover{background:var(--brand-dark)}
+#ydSearch .seg.off{cursor:not-allowed}
+#ydSearch .seg.off .segin{cursor:not-allowed;opacity:.5}
+#ydSearch .seg.off:hover{background:none}
 #ydSearch .sbtn:disabled,#ydSearch .sbtn:disabled:hover{background:#d4d6db;color:#fff;box-shadow:none;cursor:not-allowed}
 .sbtn .ico{stroke-width:2.4}
 
@@ -1643,7 +1646,7 @@ document.querySelectorAll('[role=tablist]').forEach(function(tl){
 });
 </script>
 
-<script src="assets/js/search.js?v=93c2eac4" defer></script>
+<script src="assets/js/search.js?v=afed1386" defer></script>
 <script>
 (function(){
   var tabs=[].slice.call(document.querySelectorAll('.utabs [role=tab]'));
