@@ -86,7 +86,8 @@ button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inhe
 .mentor .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
 .mh{font:700 clamp(24px,2.5vw,34px)/1.25 var(--head);letter-spacing:-.03em;color:var(--ink2)}
 .mh strong{color:#111216}
-.mcta{margin-top:24px}
+.mcta{margin-top:32px}
+.mentor .mh{font-size:clamp(28px,3vw,42px);line-height:1.18}
 .mentor .msub{max-width:520px}
 .msub{margin-top:14px;font:400 15px/1.5 var(--sans);color:var(--muted)}
 .mquote{margin:40px 0 0;max-width:520px;padding:0;display:grid;gap:12px}
@@ -486,7 +487,7 @@ body.vlock{overflow:hidden}
 .stats span{font-size:16px}
 .mlink{display:block;width:max-content;margin-top:6px;font:700 clamp(26px,2.5vw,34px)/1.2 var(--head);letter-spacing:-.03em;color:var(--brand-link);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
 .mlink:hover{color:var(--brand)}
-.mentor .msub{margin-top:22px;font-size:14.5px;color:#555}
+.mentor .msub{margin-top:20px;font-size:16.5px;line-height:1.6;color:#555}
 .mentor .mquote{margin-top:32px}
 .utabs{margin:44px auto 0;display:flex;justify-content:center;width:min(100%,428px);border-bottom:1.5px solid #dedfe3}
 .utabs button{flex:1;padding:0 8px 16px;font:400 16px/1.2 var(--sans);color:#1d1d1d;position:relative}
@@ -774,7 +775,7 @@ html.navlock .mega{overscroll-behavior:contain}
   .banner{aspect-ratio:auto;object-fit:fill;border-radius:20px}
   .mentor .grid{gap:28px;text-align:center}
   .mentor .grid>div:first-child{display:contents}
-  .mh{order:1;font-size:24px;line-height:1.3}
+  .mentor .mh{order:1;font-size:24px;line-height:1.3}
   .mh .mlink{display:inline;font-size:inherit;margin:0;text-decoration-thickness:1.5px;text-underline-offset:4px}
   .mentor .msub{order:2;margin:-14px auto 0;font-size:13.5px;max-width:36ch}
   .mentor .mcta{order:5;margin:0 auto;height:48px;font-size:16px}
@@ -817,7 +818,7 @@ html.navlock .mega{overscroll-behavior:contain}
   .sec .cta:not(.outline):not(.ghost),.ctaRow .cta:not(.outline){box-sizing:border-box;width:100%;max-width:290px;height:48px;font-size:15.5px}
   .split .txt{gap:18px}
   .split .txt p{font-size:14.5px}
-  .mh{font-size:22px}
+  .mentor .mh{font-size:22px}
   .mname{justify-content:space-between;width:100%;max-width:330px;font-size:20px}
   .mstats{gap:0;width:100%;max-width:330px;justify-content:space-around}
   .mquote blockquote{font-size:13.5px}
@@ -1132,7 +1133,6 @@ html.navlock .mega{overscroll-behavior:contain}
         <h2 class="mh">Don't just pick a degree. <br>Pick the right future.</h2>
         <p class="msub">Speak to a YourDegree-certified counsellor and get insights from 1 lakh+ learners before you choose a program or a university.</p>
         <a class="cta mcta" href="#">Connect Now <svg class="ico"><use href="#i-arrow"/></svg></a>
-        <figure class="mquote"><svg class="tqm" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 7 1 20 0v8c-6 1.5-9 5.5-9 12h9v20zm28 0V22c0-13 7-21 20-22v8c-6 1.5-9 5.5-9 12h9v20z"/></svg><blockquote id="cQuote">I came in confused about AI vs data science. I left with a plan I actually understood. Thank you, Ananya.</blockquote></figure>
       </div>
       <div class="mright">
         <div class="cluster" aria-label="Our counsellors">
@@ -1353,18 +1353,18 @@ html.navlock .mega{overscroll-behavior:contain}
   var slots=[cl.querySelector('[data-off="-2"] img'),cl.querySelector('[data-off="-1"] img'),document.getElementById('cMain'),cl.querySelector('[data-off="1"] img'),cl.querySelector('[data-off="2"] img')];
   var srcs=slots.map(function(i){return i.src;});
   var people=[
-    {n:'Meera Joshi',y:'15 Years',l:'7200+',q:'I was switching from teaching to HR and didn’t know where to start. Meera mapped out the exact MBA I needed. Thank you, Meera.'},
-    {n:'Rohan Desai',y:'6 Years',l:'2100+',q:'Rohan helped me compare three MCA programmes on fees and schedule in one call. I enrolled the same week. Thank you, Rohan.'},
-    {n:'Ananya Rao',y:'10 Years',l:'4500+',q:'I came in confused about AI vs data science. I left with a plan I actually understood. Thank you, Ananya.'},
-    {n:'Karan Mehta',y:'8 Years',l:'3200+',q:'I wanted an MBA but couldn’t pick a specialisation. Karan matched it to the work I already do. Thank you, Karan.'},
-    {n:'Priya Nair',y:'12 Years',l:'6000+',q:'Priya walked me through fees and EMI options so I could plan my budget before applying. Thank you, Priya.'}];
+    {n:'Meera Joshi',y:'15 Years',l:'7200+'},
+    {n:'Rohan Desai',y:'6 Years',l:'2100+'},
+    {n:'Ananya Rao',y:'10 Years',l:'4500+'},
+    {n:'Karan Mehta',y:'8 Years',l:'3200+'},
+    {n:'Priya Nair',y:'12 Years',l:'6000+'}];
   people.forEach(function(p,i){p.img=srcs[i];});
   var cur=2,N=people.length,busy=false;
   var $=function(id){return document.getElementById(id);};
   function render(){
     for(var o=-2;o<=2;o++){var p=people[(cur+o+N*2)%N],img=slots[o+2];img.src=p.img;
       if(o===0)img.alt=p.n+', career counsellor';else img.parentNode.setAttribute('aria-label','Show '+p.n);}
-    var p=people[cur];$('cName').textContent=p.n;$('cYears').textContent=p.y;$('cLearners').textContent=p.l;$('cQuote').textContent=p.q;
+    var p=people[cur];$('cName').textContent=p.n;$('cYears').textContent=p.y;$('cLearners').textContent=p.l;
   }
   function go(d){if(busy)return;busy=true;sec.classList.add('swap');cl.classList.add('swap');
     setTimeout(function(){cur=(cur+d+N)%N;render();
