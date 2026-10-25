@@ -1080,6 +1080,23 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--whit
   .split:has(> .disha) .txt>.cta{order:4}
   .split:has(> .disha) .pref{order:5;margin-top:0}
 }
+/* E/F: smaller headline up top, compact search lower down, video visible between */
+@media (min-width:760px){
+  html[data-hero="e"] .heroin,html[data-hero="f"] .heroin{padding-block:52px 44px;gap:clamp(120px,15vw,210px)}
+  html[data-hero="e"] .hero h1,html[data-hero="f"] .hero h1{font-size:clamp(24px,2.3vw,34px);line-height:1.22}
+  html[data-hero="e"] .search,html[data-hero="f"] .search{max-width:740px;padding:4px 8px 4px 4px}
+  html[data-hero="e"] .segin,html[data-hero="f"] .segin{padding:10px 14px 10px 22px;gap:2px}
+  html[data-hero="e"] .segin b,html[data-hero="f"] .segin b{font-size:14px}
+  html[data-hero="e"] .segin input,html[data-hero="f"] .segin input{font-size:13px}
+  html[data-hero="e"] .sbtn,html[data-hero="f"] .sbtn{height:42px;min-width:42px}
+  html[data-hero="e"] .search:not(.on) .sbtn,html[data-hero="f"] .search:not(.on) .sbtn{width:42px}
+}
+@media (max-width:759px){
+  html[data-hero="e"] .heroin,html[data-hero="f"] .heroin{padding-block:34px 28px;gap:118px}
+  html[data-hero="e"] .hero h1,html[data-hero="f"] .hero h1{font-size:21px;text-wrap:balance}
+  html[data-hero="e"] .hero h1 br,html[data-hero="f"] .hero h1 br{display:none}
+  html[data-hero="e"] .msearch,html[data-hero="f"] .msearch{height:50px;font-size:15px}
+}
 @keyframes hvstrip{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.hv-ban img{transition:none;transform:none}.hv-strip ul{animation:none}.hv-strip .wrap{overflow-x:auto}*{transition:none!important}.spanel,.spanel>*{animation:none!important}}
 </style>
