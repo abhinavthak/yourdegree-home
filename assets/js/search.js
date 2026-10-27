@@ -186,6 +186,8 @@
     return '<span class="sp-logo">' + (ulogo[u] ? '<img src="assets/img/ulogo/' + ulogo[u] + '.webp" alt="" width="28" height="28" loading="lazy">'
       : '<b>' + esc(initials(u)) + '</b>') + '</span>';
   }
+  var POPULAR = ['D.Y. Patil University', 'Chandigarh University', 'Jain University', 'Kurukshetra University', 'O.P. Jindal Global University',
+    'NMIMS (Narsee Monjee Institute of Management Studies)', 'Lovely Professional University', 'Bharati Vidyapeeth', 'Amrita Vishwa Vidyapeetham University'];
   function renderUni() {
     var q = norm(qUni.value === state.uni ? '' : qUni.value), unis = {};
     data.forEach(function (p) { if (!state.degree || p.d === state.degree) unis[p.u] = (unis[p.u] || 0) + 1; });
@@ -195,12 +197,18 @@
       '<button type="button" role="option" class="sp-pill sp-big' + (!state.uni ? ' sel' : '') + '" data-uni="">' +
       '<svg class="ico sp-award" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V10h14v11M9 21v-4h6v4M8 13h1M11.5 13h1M15 13h1M12 10V4m0 0h4l-1 1.5 1 1.5h-4"/></svg>' +
       '<span><b>Select Any University</b><small>' + names.length + ' Universit' + (names.length === 1 ? 'y' : 'ies') + '</small></span></button></div>';
+    function pill(u) {
+      return '<button type="button" role="option" class="sp-pill' + (state.uni === u ? ' sel' : '') + '" data-uni="' + esc(u) + '" title="' +
+        esc(u) + ' · ' + unis[u] + ' programme' + (unis[u] > 1 ? 's' : '') + '">' + uniBadge(u) + '<span>' + esc(u) + '</span></button>';
+    }
+    /* popular universities first (same list as the Top University menu), only when not typing */
+    var pop = q ? [] : POPULAR.filter(function (u) { return unis[u]; });
+    if (pop.length) html += '<p class="sp-k sp-az sp-pop">Popular universities</p><div class="sp-pills" role="listbox">' + pop.map(pill).join('') + '</div><p class="sp-k sp-all">All universities</p>';
     var letter = null;
     names.forEach(function (u) {
       var L = u.replace(/^(the|university of)\s+/i, '').charAt(0).toUpperCase();
       if (L !== letter) { if (letter) html += '</div>'; letter = L; html += '<p class="sp-k sp-az">' + L + '</p><div class="sp-pills" role="listbox">'; }
-      html += '<button type="button" role="option" class="sp-pill' + (state.uni === u ? ' sel' : '') + '" data-uni="' + esc(u) + '" title="' +
-        esc(u) + ' · ' + unis[u] + ' programme' + (unis[u] > 1 ? 's' : '') + '">' + uniBadge(u) + '<span>' + esc(u) + '</span></button>';
+      html += pill(u);
     });
     if (letter) html += '</div>';
     if (!names.length) html += '<p class="sp-none">No universities match “' + esc(qUni.value) + '”' + (state.degree ? ' for ' + DEG[state.degree][0] : '') + '.</p>';
