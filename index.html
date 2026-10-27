@@ -1044,7 +1044,7 @@ html[data-hero="f"] .heroin,html[data-hero="e"] .heroin{position:relative;isolat
 .hv-vid video{width:100%;height:100%;object-fit:cover;display:block}
 .hv-vid::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,22,.5) 0%,rgba(10,14,22,.28) 45%,rgba(10,14,22,.5) 100%)}
 html[data-hero="f"] .hero h1,html[data-hero="e"] .hero h1{color:var(--white);font-size:clamp(32px,3.6vw,52px);text-shadow:0 2px 18px rgba(0,0,0,.35)}
-html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--white)}
+html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:#ff3b47}
 .hv-strip{background:var(--white);border-bottom:1px solid #eeeff2}
 .hv-strip ul{list-style:none;margin:0;padding:18px 0;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 40px}
 .hv-strip li{display:flex;align-items:center;gap:10px;font:400 15px/1.3 var(--sans);color:#2d3340;white-space:nowrap}
@@ -1198,7 +1198,7 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--whit
     <div class="heroin">
       <div class="hv-ban" data-hv="f" hidden><figure class="hb-s on"><img alt="" data-src="assets/img/hero_ban_campus.webp" style="object-position:50% 60%" decoding="async"></figure><figure class="hb-s"><img alt="" data-src="assets/img/hero_ban_study.webp" style="object-position:50% 30%" decoding="async"></figure><figure class="hb-s"><img alt="" data-src="assets/img/hero_ban_grad.webp" style="object-position:50% 35%" decoding="async"></figure><div class="hb-dots"><button type="button" aria-label="Show banner 1" aria-current="true"></button><button type="button" aria-label="Show banner 2"></button><button type="button" aria-label="Show banner 3"></button></div></div>
       <div class="hv-vid" data-hv="e" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/img/hero_campus.webp" data-src="assets/video/hero_campus.mp4"></video></div>
-      <h1 class="hd" id="heroH">Find and compare online degrees <br>from 87 universities, in one place</h1>
+      <h1 class="hd" id="heroH">Find and compare <em>online degrees</em> <br>from 87 universities, in one place</h1>
       <button type="button" class="msearch" id="msOpen" aria-haspopup="dialog" aria-controls="ydSearch"><svg class="ico"><use href="#i-search"/></svg><span id="msLabel">Search <span class="rw" aria-hidden="true"><span><i>degrees</i><i>universities</i><i>specialisations</i><i>degrees</i></span></span><span class="sr">degrees, universities or specialisations</span></span></button>
       <form class="search" id="ydSearch" role="search" autocomplete="off">
         <div class="mhead"><b>Find your degree</b><button type="button" class="sp-x" id="msClose" aria-label="Close search"><svg class="ico"><use href="#i-close"/></svg></button></div>
@@ -1223,7 +1223,7 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:var(--whit
 </header>
 <script>
 (function(){
-  var H1={"o": "Find the right <em>online degree</em> <br class=\"mbr\">for your career goals", "e": "Find and compare online degrees <br>from 87 universities, in one place", "f": "Find and compare online degrees <br>from 87 universities, in one place"},NM={"o": "Current hero", "e": "OYO-style video hero", "f": "OYO-style rotating banners"},K='ydHero',de=document.documentElement;
+  var H1={"o": "Find the right <em>online degree</em> <br class=\"mbr\">for your career goals", "e": "Find and compare <em>online degrees</em> <br>from 87 universities, in one place", "f": "Find and compare <em>online degrees</em> <br>from 87 universities, in one place"},NM={"o": "Current hero", "e": "OYO-style video hero", "f": "OYO-style rotating banners"},K='ydHero',de=document.documentElement;
   function apply(v){if(!H1[v])v='e';de.setAttribute('data-hero',v);document.getElementById('heroH').innerHTML=H1[v];
     document.querySelectorAll('[data-hv]').forEach(function(e){e.hidden=e.getAttribute('data-hv').split(' ').indexOf(v)<0;});
     document.querySelectorAll('.hvopts button').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-hero')===v);});
