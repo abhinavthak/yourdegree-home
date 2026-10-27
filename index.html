@@ -907,9 +907,9 @@ html.navlock .mega{overscroll-behavior:contain}
   body.navsheet .nlink:not([aria-expanded="true"]){background:#d9dadd;box-shadow:none}
 }
 /* account menu (Airbnb-style) */
-.me .mepill{display:flex;align-items:center;gap:12px;height:46px;padding:0 6px 0 14px;box-sizing:border-box;border:1px solid #dddddd;border-radius:999px;background:var(--white);box-shadow:none;cursor:pointer;transition:box-shadow .2s}
+.me .mepill{display:flex;align-items:center;justify-content:center;gap:0;width:46px;height:46px;padding:0;box-sizing:border-box;border:1px solid #dddddd;border-radius:999px;background:var(--white);box-shadow:none;cursor:pointer;transition:box-shadow .2s}
 .me .mepill:hover,.me .mepill[aria-expanded="true"]{box-shadow:0 2px 6px rgba(0,0,0,.18)}
-.mepill .mi{width:17px;height:17px;fill:none;stroke:#222;stroke-width:2.2;stroke-linecap:round}
+.mepill .mi{width:20px;height:20px;fill:none;stroke:#222;stroke-width:2.2;stroke-linecap:round}
 .mepill .avph{display:block;width:32px;height:32px;margin:0;background:none;box-shadow:none;color:#6a6a6a}
 .mepill .avph svg{display:block;width:32px;height:32px;margin:0;fill:currentColor;stroke:none}
 #mnav{top:76px;right:max(var(--gutR),calc((100% - 1280px)/2));width:260px;padding:8px 0;gap:0;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.18);border:1px solid #ebebeb;z-index:60}
@@ -924,7 +924,7 @@ html.navlock .mega{overscroll-behavior:contain}
 #mnav .mfeat small{font:400 12px/1.35 var(--sans);color:#6a6a6a}
 #mnav .mfeat .mdisha{flex:none;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(255,120,104,.18) 0,rgba(255,120,104,0) 70%)}
 #mnav a:last-child{font-weight:500}
-@media (max-width:759px){.me .mepill{height:42px;gap:10px;padding:0 5px 0 12px}.mepill .avph,.mepill .avph svg{width:30px;height:30px}#mnav{top:68px;right:var(--gutR)}}
+@media (max-width:759px){.me .mepill{width:42px;height:42px;padding:0}#mnav{top:68px;right:var(--gutR)}}
 /* phone/tablet Top University: accordion (Home Page — Mobile-3/5) */
 .mu-chev,.mu-acc{display:none}
 @media (max-width:1100px){
@@ -1179,7 +1179,7 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:#ff3b47}
         <li><a class="nlink" href="#"><img class="n3d" src="assets/img/nav_compare.webp" alt="" width="32" height="32"><span class="nfl">Compare Programs</span><span class="nsh">Compare</span><span class="new">NEW</span></a></li>
       </ul>
       <div class="me">
-        <button class="mepill" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav" aria-haspopup="menu"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h18M3 12h18M3 17.5h18"/></svg><span class="avph" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 .7C7.56.7.7 7.56.7 16S7.56 31.3 16 31.3 31.3 24.44 31.3 16 24.44.7 16 .7zm0 28c-4.02 0-7.6-1.88-9.93-4.81a12.43 12.43 0 0 1 6.45-4.4A6.5 6.5 0 0 1 9.5 14a6.5 6.5 0 0 1 13 0 6.51 6.51 0 0 1-3.02 5.5 12.42 12.42 0 0 1 6.45 4.4A12.67 12.67 0 0 1 16 28.7z"/></svg></span></button>
+        <button class="mepill" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav" aria-haspopup="menu"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h18M3 12h18M3 17.5h18"/></svg></button>
       </div>
     </div>
     <nav class="mnav" id="mnav" aria-label="Account menu" hidden>
