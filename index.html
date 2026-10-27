@@ -1131,12 +1131,9 @@ html[data-hero="f"] .hero h1 em,html[data-hero="e"] .hero h1 em{color:#ff3b47}
   .dgrid .dc2 h3{font-size:14.5px}
   .dgrid .dc2 .s{font-size:12.5px}
 }
-/* Cal Sans for every section between the hero and the footer */
-body>section,body>section *{font-family:"Cal Sans",var(--sans)!important;font-synthesis:none;letter-spacing:.005em!important}
-/* Google Sans for subheadings, testimonials and the FAQ */
-body>section .sub,body>section .msub,body>section .split .txt>p,
-body>section .ttrack,body>section .ttrack *,
-body>section.faqs .faqhead p,body>section.faqs .faqhead p *,body>section.faqs .faqlist,body>section.faqs .faqlist *{font-family:var(--sans)!important;font-synthesis:weight style;letter-spacing:normal!important}
+/* sections between hero and footer: Cal Sans for headings and card titles, Google Sans for everything else */
+body>section,body>section *{font-family:var(--sans)!important}
+body>section h2,body>section h3,body>section .tcard p{font-family:"Cal Sans",var(--sans)!important;font-synthesis:none;letter-spacing:.005em!important}
 @keyframes hvstrip{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.msearch .rw>span{animation:none}}
 @media (prefers-reduced-motion:reduce){.hv-ban img{transition:none;transform:none}.hv-strip ul{animation:none}.hv-strip .wrap{overflow-x:auto}*{transition:none!important}.spanel,.spanel>*{animation:none!important}}
